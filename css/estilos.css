@@ -1,0 +1,188 @@
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+	
+	font-family: 'Raleway', sans-serif;
+	color:#fff;
+}
+
+a {
+	text-decoration: none;
+	color:#B8711B;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.contenedor {
+	max-width: 500px;
+	width: 90%;
+	margin: auto;
+}
+
+.titulo {
+	font-weight: 300;
+	color: #B8711B;
+	text-align: center;
+	margin: 0px 0 30px 0;
+	font-size: 2em;
+	font-weight: bold;
+}
+
+.border {
+	border:none;
+	margin-bottom: 5px; 
+	border-top:10px solid #B8711B;
+	background: none;
+	color:none;
+}
+
+.formulario {
+	background: #2C2C47;
+	padding: 30px;
+	margin-bottom: 30px;
+	font-size: 16px;
+}
+
+.formulario .form-group {
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.formulario input[type="text"],
+.formulario input[type="password"] {
+	padding: 15px;
+	font-family: 'Raleway', sans-serif;
+	font-size: 18px;
+	line-height: 18px;
+	border: none;
+	vertical-align: top;
+}
+
+.formulario .icono {
+	padding: 15px;
+	text-align: center;
+	width: 48px;
+	max-height: 48px
+	font-size: 18px;
+	line-height: 18px;
+	background: #c8c8c8;
+	display: inline-block;
+	color:#6b6b6b;
+	vertical-align: top;
+}
+
+.formulario .icono.izquierda {
+	margin-right: 4px;
+	-webkit-border-radius: 3px 0 0 3px;
+	-moz-border-radius: 3px 0 0 3px;
+	-ms-border-radius: 3px 0 0 3px;
+	-o-border-radius: 3px 0 0 3px;
+	border-radius: 3px 0 0 3px;
+}
+
+.formulario .usuario,
+.formulario .password {
+	width: calc(100% - 52px);
+	-webkit-border-radius: 0 3px 3px 0;
+	-moz-border-radius: 0 3px 3px 0;
+	-ms-border-radius: 0 3px 3px 0;
+	-o-border-radius: 0 3px 3px 0;
+	border-radius: 0 3px 3px 0;
+}
+
+.formulario .password_btn {
+	width: calc(100% - 105px);
+}
+
+.formulario .error ul {
+	padding: 0 15px;
+}
+
+.formulario .error ul li {
+	margin-bottom: 10px;	
+}
+
+.formulario .submit-btn {
+	padding: 15px;
+	text-align: center;
+	width: 48px;
+	max-height: 48px
+	font-size: 18px;
+	line-height: 18px;
+	background: #679863;
+	display: inline-block;
+	color:#fff;
+	background: #769766;
+	cursor: pointer;
+
+	-webkit-border-radius: 0 3px 3px 0;
+	-moz-border-radius: 0 3px 3px 0;
+	-ms-border-radius: 0 3px 3px 0;
+	-o-border-radius: 0 3px 3px 0;
+	border-radius: 0 3px 3px 0;
+}
+
+.texto-registrate {
+	text-align: center;
+}
+
+.texto-registrate a {
+	display: block;
+	font-size: 18px;
+}
+
+.contenido article {
+	padding: 30px;
+	background: #fff;
+}
+
+.contenido article p{
+	margin-bottom: 10px;
+	color:#000;
+}
+
+#customerproductor {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    
+    overflow:scroll; 
+    text-align: center;  
+}
+
+#customerproductor td, #customerproductor th {
+    border: 1px solid #ddd;
+    padding: 0px;
+    font-size: 1em;
+}
+#customerproductor td
+{
+  font-size: 1em;
+}
+
+#customerproductor tr:nth-child(even){background-color: #f2f2f2;}
+
+#customerproductor tr:hover {background-color: #ddd;}
+
+#customerproductor th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: white;
+    text-align: center;
+    background: rgba(73,155,234,1);
+background: -moz-linear-gradient(top, rgba(73,155,234,1) 12%, rgba(67,151,233,1) 20%, rgba(32,124,229,1) 69%, rgba(32,124,229,1) 73%);
+background: -webkit-gradient(left top, left bottom, color-stop(12%, rgba(73,155,234,1)), color-stop(20%, rgba(67,151,233,1)), color-stop(69%, rgba(32,124,229,1)), color-stop(73%, rgba(32,124,229,1)));
+background: -webkit-linear-gradient(top, rgba(73,155,234,1) 12%, rgba(67,151,233,1) 20%, rgba(32,124,229,1) 69%, rgba(32,124,229,1) 73%);
+background: -o-linear-gradient(top, rgba(73,155,234,1) 12%, rgba(67,151,233,1) 20%, rgba(32,124,229,1) 69%, rgba(32,124,229,1) 73%);
+background: -ms-linear-gradient(top, rgba(73,155,234,1) 12%, rgba(67,151,233,1) 20%, rgba(32,124,229,1) 69%, rgba(32,124,229,1) 73%);
+background: linear-gradient(to bottom, rgba(73,155,234,1) 12%, rgba(67,151,233,1) 20%, rgba(32,124,229,1) 69%, rgba(32,124,229,1) 73%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#207ce5', GradientType=0 );
+}
