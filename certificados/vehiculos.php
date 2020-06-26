@@ -13,14 +13,14 @@ switch ($tipo_usuario) {
         $menu = "../menus/administrativo.php";
         break;
 }
+$verificar = 0;
+$verificar2 = 0;
 
 if ($_POST) {
     # code...
     $vehiculo = $_POST['vehiculo'];
     $placas = $_POST['placas'];
     $modelo = $_POST['modelo'];
-    $verificar = 0;
-    $verificar2 = 0;
 
     $statement = $conexion->prepare("SELECT * FROM vehiculos WHERE placas='$placas'");
     $statement->execute();
@@ -352,7 +352,7 @@ if ($_POST) {
                                         <h2 class="h2-responsive product-name m-t-10"><strong>Modelo</strong></h2>
                                         <input type="number" class="form-control" id="modal_modelo" name="modelo">
                                         <input type="hidden" id="id_elemento" name="id">
-                                        <input type="hidden" value="unidades" name="accion">
+                                        <input type="hidden" value="vehiculos" name="accion">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default waves-effect" data-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
@@ -433,6 +433,7 @@ if ($_POST) {
                     $("#modal_vehiculo").attr("value", vehiculo)
                     $("#modal_placas").attr("value", placas)
                     $("#modal_modelo").attr("value", modelo)
+                    $("#id_elemento").attr("value", id)
                 }
             </script>
             <?php
