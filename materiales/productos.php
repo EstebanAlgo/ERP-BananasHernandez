@@ -748,11 +748,11 @@ function categoria($conexion, $id)
 function cantidad($conexion, $id)
 {
     $resultado = 0;
-    $statement = $conexion->prepare("SELECT * FROM ingreso WHERE id_material='$id'");
+    $statement = $conexion->prepare("SELECT * FROM almacen WHERE id_material='$id'");
     $statement->execute();
     $resultados = $statement->fetchAll();
     foreach ($resultados as $filas) {
-        $resultado = $resultado + $filas['cantidad'];
+        $resultado = $resultado + $filas['stock'];
     }
 
     return $resultado;

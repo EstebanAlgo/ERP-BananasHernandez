@@ -142,22 +142,6 @@ if($_POST)
                                          $image_perfil="../assets/images/users/administrativo.png";
                                          $menu="../menus/administrativo.php";
                                          break;
-                                    case 'Productor':
-                                          $image_perfil="../assets/images/users/productor.jpg";
-                                          $menu="../menus/productor.php";
-                                         break;
-                                    case 'Contabilidad':
-                                          $image_perfil="../assets/images/users/contabilidad.jpg";
-                                          $menu="../menus/contabilidad.php";
-                                         break;
-                                    case 'Pista':
-                                          $image_perfil="../assets/images/users/empleados.jpg";
-                                          $menu="../menus/pista.php";
-                                         break;
-                                    case 'Bascula':
-                                          $image_perfil="../assets/images/users/empleados.jpg";
-                                          $menu="../menus/bascula.php";
-                                         break;
                                      
                                  } 
                                  ?>
@@ -240,7 +224,7 @@ if($_POST)
                                 <h4 class="m-b-0 text-white">Añadir Nuevo Remitente</h4>
                             </div>
                             <div class="card-body">
-                                <form action="vehiculo.php" class="form-horizontal" method="post">
+                                <form action="vehiculos.php" class="form-horizontal" method="post">
                                     <div class="form-body">
                                         <h3 class="box-title">Información Requerida</h3>
                                         <hr class="m-t-0 m-b-40">

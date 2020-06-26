@@ -13,6 +13,27 @@ switch ($tipo_usuario) {
         $menu = "../menus/administrativo.php";
         break;
 }
+if ($_POST) {
+    $producto = $_POST['producto'];
+    $cantidad = $_POST['cantidad'];
+    $fecha = $_POST['fecha'];
+    $finca = $_POST['finca'];
+    $id_solicitud = $_POST['mayor'];
+
+    $cont=0;
+
+    $statement = $conexion->prepare("SELECT MAX(id_solicitud) FROM solicitud");
+    $statement->execute();
+    $idmax = $statement->fetchAll();
+    foreach ($idmax as $fila) {
+        $mayor = $fila[0] + 1;
+    }
+    if ($id_solicitud == $mayor) {
+        $statement = $conexion->prepare("INSERT INTO solicitud (id_solicitud,id_material,cantidad,id_finca,status,fecha,usuario) VALUES (NULL,'$producto','$cantidad','$finca','PENDIENTE','$fecha','$id_usuario')");
+        $statement->execute();
+        $cont++;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -337,7 +358,7 @@ switch ($tipo_usuario) {
                 <!-- MODAL AGREGAR SOLICITUD -->
                 <div id="agregar-solicitud" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                     <div class="modal-dialog">
-                        <form>
+                        <form action="solicitud.php" method="POST">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -347,13 +368,13 @@ switch ($tipo_usuario) {
                                     <div class="row">
                                         <div class="col-10 col-md-6 offset-1 offset-md-6">
                                             <label class="control-label">Fecha</label>
-                                            <input type="date" class="form-control" value="<?php echo date('Y-m-d') ?>" id="fecha">
+                                            <input type="date" class="form-control" value="<?php echo date('Y-m-d') ?>" name="fecha">
                                         </div>
                                     </div>
                                     <div class="row m-t-15">
                                         <div class="col-12 col-md-6">
                                             <label class="control-label">Producto:</label>
-                                            <select id="producto" class="btn btn-outline-dark  btn-block">
+                                            <select name="producto" class="btn btn-outline-dark  btn-block">
                                                 <?php
                                                 $statement = $conexion->prepare('SELECT *FROM material');
                                                 $statement->execute();
@@ -370,13 +391,13 @@ switch ($tipo_usuario) {
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <label class="control-label">Cantidad</label>
-                                            <input type="number" class="form-control" placeholder="Cantidad" id="cantidad" required>
+                                            <input type="number" class="form-control" placeholder="Cantidad" name="cantidad" required>
                                         </div>
                                     </div>
                                     <div class="row m-t-15">
                                         <div class="col">
                                             <label class="control-label ">Finca:</label>
-                                            <select id="finca" class="btn  btn-outline-dark btn-block">
+                                            <select name="finca" class="btn  btn-outline-dark btn-block">
                                                 <?php
                                                 $statement = $conexion->prepare('SELECT *FROM origen');
                                                 $statement->execute();
@@ -387,13 +408,20 @@ switch ($tipo_usuario) {
                                                     $id_finca = $fila['id_origen'];
                                                     echo "<option value='$id_finca'>$nombre_finca</option>";
                                                 }
-
                                                 ?>
-
                                             </select>
                                         </div>
 
                                     </div>
+                                    <?php
+                                    $statement = $conexion->prepare("SELECT MAX(id_solicitud) FROM solicitud");
+                                    $statement->execute();
+                                    $idmax = $statement->fetchAll();
+                                    foreach ($idmax as $fila) {
+                                        $mayor = $fila[0] + 1;
+                                    }
+                                    ?>
+                                    <input type="hidden" name="mayor" value="<?php echo $mayor; ?>">
 
                                 </div>
                                 <div class="modal-footer">
@@ -447,7 +475,7 @@ switch ($tipo_usuario) {
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <label for="recipient-name" class="control-label">PROVEEDOR:</label>
-                                                <select name="proveedor" id="input_proveedor" class="form-control">
+                                                <select name="proveedor" id="input_proveedor" class="form-control" required>
                                                     <option>Selecciona un proveedor</option>
                                                     <?php
                                                     $statement = $conexion->prepare("SELECT * FROM proveedor");
@@ -650,6 +678,11 @@ switch ($tipo_usuario) {
             ]
         });
     </script>
+    <?php
+    if ($cont>0) {
+        echo "<script>swal('REGISTRO EXITOSO!', 'Solicitud agregada exitosamente','success')</script>";
+    }
+    ?>
     <script>
         function editar(id) {
             var solicitud = $('#solicitud' + id).val()
@@ -657,7 +690,7 @@ switch ($tipo_usuario) {
             var cantidad = $('#cantidad' + id).val()
             var finca = $('#finca' + id).val()
             var fecha = $('#fecha' + id).val()
-             //alert (finca+fecha)
+            //alert (finca+fecha)
             $("#material").html(material)
             $("#fincaaprobar").html(finca)
             $("#fechaaprobar").html(fecha)

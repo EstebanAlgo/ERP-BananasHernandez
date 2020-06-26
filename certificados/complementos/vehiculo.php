@@ -24,25 +24,14 @@ $statement=$conexion->prepare("SELECT * FROM vehiculos");
 	$statement->execute();
 	$table=$statement->fetchAll();
 	foreach ($table as $fila) {
-
-			
             $vehiculo=vehiculo($conexion,$fila['id_vehiculo']);
             $placas=$fila['placas'];
             $modelo=$fila['modelo'];
-            
-
             $filas.="<tr>
-			
-			
-			
 			<th>$vehiculo</th>
             <th>$placas</th>
-            <th>$modelo</th>
-            
-            
+            <th>$modelo</th> 
 			</tr>";
-
-
 			}
 
 $tabla="

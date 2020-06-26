@@ -34,7 +34,7 @@ require('../../php/conexion.php');
         $actualizar_almacen=$conexion->prepare("UPDATE solicitud SET cantidad='$cantidad',status='APROBADO' WHERE id_solicitud='$id'");
         $actualizar_almacen->execute();
        
-    header('Location: ../altas_ingresos.php');
+    header('Location: ../solicitud.php');
      
      }
      else
@@ -48,9 +48,7 @@ require('../../php/conexion.php');
         $actualizar_almacen=$conexion->prepare("UPDATE solicitud SET cantidad='$cantidad',status='APROBADO' WHERE id_solicitud='$id'");
         $actualizar_almacen->execute();
 
-        header('Location: ../altas_ingresos.php');
+        header('Location: ../solicitud.php');
      }
     
-
-
- ?>
+     //echo "Cantidad:".$cantidad." Id de Solicitud:".$id." Proveedor:".$proveedor;
