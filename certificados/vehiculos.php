@@ -303,9 +303,10 @@ if ($_POST) {
                                                               <input type='hidden' value='$vehiculo' id='vehiculo$id_vehiculo'/>
                                                               <input type='hidden' value='$placas' id='placas$id_vehiculo'/>
                                                               <input type='hidden' value='$modelo' id='modelo$id_vehiculo'/>
-                                                              <form style='display:inline-block;' method='POST' action='delete_vehiculo.php'>
+                                                              <form style='display:inline-block;' method='POST' action='complementos/deletes.php'>
                                                               <input type='hidden' value='$id_vehiculo' name='id'/>
-                                                              <button class='btn btn-danger btn-sm'><i class='fas fa-trash-alt'></i></button>
+                                                              <input type='hidden' value='vehiculos' name='accion'/>
+                                                              <button  onclick='eliminar(event)' class='btn btn-danger btn-sm'><i class='fas fa-trash-alt'></i></button>
                                                               </form>
                                                               </td> 
                                                             </tr>";
@@ -452,5 +453,15 @@ if ($_POST) {
             ?>
 
 </body>
+<script language="JavaScript"> 
+function eliminar(e){ 
+   if (confirm('¿Esta seguro de que desea ELIMINAR el registro seleccionado?')){ 
+    document.borrar_usuario.submit();
+}
+else{
+    e.preventDefault();
+}
+} 
+</script>
 
 </html>
