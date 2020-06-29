@@ -1,35 +1,39 @@
-<?php  
-      require('../php/conexion.php');
+<?php
+require('../php/conexion.php');
 
-       $image_perfil='';
-                                $menu="";
-                                switch ($tipo_usuario) {
-                                     case 'Administrador':
-                                         $image_perfil="../assets/images/users/administrador.png";
-                                         $menu="../menus/administrador.php";
-                                         break;
-                                     case 'Administrativo':
-                                         $image_perfil="../assets/images/users/administrativo.png";
-                                         $menu="../menus/administrativo.php";
-                                         break;
-                                    case 'Productor':
-                                          $image_perfil="../assets/images/users/productor.jpg";
-                                          $menu="../menus/productor.php";
-                                         break;
-                                    case 'Contabilidad':
-                                          $image_perfil="../assets/images/users/contabilidad.jpg";
-                                          $menu="../menus/contabilidad.php";
-                                         break;
-                                    case 'Pista':
-                                          $image_perfil="../assets/images/users/empleados.jpg";
-                                          $menu="../menus/pista.php";
-                                         break;
-                                    case 'Bascula':
-                                          $image_perfil="../assets/images/users/empleados.jpg";
-                                          $menu="../menus/bascula.php";
-                                         break;
-                                     
-                                 } 
+$image_perfil = '';
+$menu = "";
+switch ($tipo_usuario) {
+    case 'Administrador':
+        $image_perfil = "../assets/images/users/administrador.png";
+        $menu = "../menus/administrador.php";
+        break;
+    case 'Administrativo':
+        $image_perfil = "../assets/images/users/administrativo.png";
+        $menu = "../menus/administrativo.php";
+        break;
+}
+$verificar = 0;
+$verificar2 = 0;
+
+if ($_POST) {
+    # code...
+    $nombre=$_POST['nombre'];
+    $direccion=$_POST['direccion'];
+    $estado=$_POST['estado'];
+    $licencia=$_POST['licencia'];
+
+    $statement = $conexion->prepare("SELECT * FROM conductor WHERE licencia='$licencia'");
+    $statement->execute();
+    $array_licencia = $statement->fetchAll();
+    if (COUNT($array_licencia) > 0) {
+        $verificar++;
+    } else {
+        $statement=$conexion->prepare("INSERT INTO conductor (id_conductor,nombre,direccion,estado,licencia) VALUES (NULL,'$nombre','$direccion','$estado','$licencia')");
+	$statement->execute();
+        $verificar2++;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,10 +51,11 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/logo.ico">
-    <title>INICIO</title>
+    <title>Conductores</title>
     <!-- Bootstrap Core CSS -->
     <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-     <!--alerts CSS -->
+    <link href="../assets/plugins/datatables/media/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <!--alerts CSS -->
     <link href="../assets/plugins/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
@@ -101,10 +106,10 @@
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <span>
-                         <!-- dark Logo text -->
-                         <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-                         <!-- Light Logo text -->    
-                         <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
+                            <!-- dark Logo text -->
+                            <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo text -->
+                            <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -126,16 +131,15 @@
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
-                                <div class="notify"> 
+                                <div class="notify">
                                     <?php
 
-                                     if ($cont_alerta>0) {
-                                    echo "<span class='heartbit'></span> <span class='point'></span> </div>";
-                                     }
-                                     else{
-                                         echo "<span class=''></span> <span class=''></span> </div>";
-                                     } ?>
-                                
+                                    if ($cont_alerta > 0) {
+                                        echo "<span class='heartbit'></span> <span class='point'></span> </div>";
+                                    } else {
+                                        echo "<span class=''></span> <span class=''></span> </div>";
+                                    } ?>
+
                             </a>
                             <div class="dropdown-menu mailbox dropdown-menu-right scale-up" aria-labelledby="2">
                                 <ul>
@@ -147,13 +151,13 @@
                                             <!-- Message -->
                                             <?php
 
-                                            for ($i=0; $i < $cont_alerta; $i++) { 
+                                            for ($i = 0; $i < $cont_alerta; $i++) {
 
-                                                $dia= substr($fecha[$i], 8,2);
-                                                $mes= substr($fecha[$i], 5,2);
-                                                $año= substr($fecha[$i], 0,4);
-                                                $hora= substr($fecha[$i], 11,5);
-                                                
+                                                $dia = substr($fecha[$i], 8, 2);
+                                                $mes = substr($fecha[$i], 5, 2);
+                                                $año = substr($fecha[$i], 0, 4);
+                                                $hora = substr($fecha[$i], 11, 5);
+
 
                                                 echo "
                                             <!-- Message -->
@@ -164,10 +168,9 @@
                                                 </a>
                                             <!-- Message -->
                                                       ";
-                                                 
-                                             } 
+                                            }
 
-                                             ?>
+                                            ?>
                                         </div>
                                     </li>
                                     <li>
@@ -191,7 +194,8 @@
                                             <div class="u-img"><img src="../assets/images/users/1.jpg" alt="user"></div>
                                             <div class="u-text">
                                                 <h4><?php echo $usuario ?></h4>
-                                                <p class="text-muted"><?php echo $nombre.' '.$p_apellido ?></p><a href="../views/perfil-usuario.php" class="btn btn-rounded btn-danger btn-sm">Perfil</a></div>
+                                                <p class="text-muted"><?php echo $nombre . ' ' . $p_apellido ?></p><a href="../views/perfil-usuario.php" class="btn btn-rounded btn-danger btn-sm">Perfil</a>
+                                            </div>
                                         </div>
                                     </li>
                                     <li role="separator" class="divider"></li>
@@ -201,7 +205,7 @@
                                 </ul>
                             </div>
                         </li>
-                       
+
                     </ul>
                 </div>
             </nav>
@@ -212,13 +216,13 @@
         <!-- ============================================================== -->
         <!-- MENú - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-     <div id="barra_navegacion">
-           
-     </div>
+        <div id="barra_navegacion">
 
-  <script type="text/javascript">
-   $("#barra_navegacion").load('<?php echo $menu; ?>');
-  </script>
+        </div>
+
+        <script type="text/javascript">
+            $("#barra_navegacion").load('<?php echo $menu; ?>');
+        </script>
         <!-- ============================================================== -->
         <!-- End MENú - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -235,229 +239,240 @@
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">Dashboard</h3>
+                        <h3 class="text-themecolor m-b-0 m-t-0">SISTEMA</h3>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Certificados</a></li>
+                            <li class="breadcrumb-item active">Vehículos</li>
                         </ol>
                     </div>
-                    
+
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
 
 
-                
+
 
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-               <div class="container">
-               	        <div class="row">
-               		       <div class="col-12 col-md-5 car">
-               		       	
-							<div class="card-outline-info">
-                                  <div class="card-header">
-                                  <h4 class="text-white">BANANAS HERNANDEZ</h4>
-                                  </div>
-								</div>
-               		       
-								                              
-                                    <div class="card-body bg-light">
-                                      <div class="col">
-                                          <h3 class="card-title">ALTA DE CONDUCTOR</h3>
-                                      </div>
-                                     
-                                      
-                                        <hr>
-                                        
-                                        
-                                        <div class="row m-t-15">
-                                        	<div class="col">
-                                        	     <label class="control-label">Nombre</label>
-                                                    <input type="text" class="form-control" placeholder="Inserte nombre del conductor" id="nombre">
-                                        	</div>
-                                          <div class="col">
-                                               <label class="control-label">Dirección</label>
-                                                    <input type="text" class="form-control" placeholder="Inserte direccion del conductor" id="direccion">
-                                          </div>
-                                          
-                                        	</div>
-                                        <div class="row m-t-15">
-                                          <div class="col">
-                                            <label class="control-label">Estado</label>
-                                                    <input type="text" class="form-control" placeholder="Inserte Estado" id="estado">
-                                                     </div>
-                                                     <div class="col">
-                                                       <label class="control-label">Localidad</label>
-                                                    <input type="text" class="form-control" placeholder="Inserte Localidad" id="localidad">
-                                                     </div>
-                                         
-                                                    
-                                        </div>
-                                       <div class="row">
-                                         <div class="col">
-                                            <label class="control-label">Licencia</label>
-                                                    <input type="text" class="form-control" placeholder="Inserte numero de licencia" id="licencia">
-                                                     </div>
-                                       </div>
-                                          <div class="row m-t-15">
-                                          <div class="col">
-                                            <button type="submit" class="btn btn-success" id="agregar"> <i class="fa fa-check" ></i> AGREGAR</button>
-                                          </div>
-                                        </div>
+                <div class="container">
+                    <div class="row">
 
-                                        
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <b>
+                                        <h4 class="card-title">Conductores</h4>
+                                    </b>
+                                    <h6 class="card-subtitle">Control de Choferes registrados la movilización de la fruta</h6>
+                                    <div class="table-responsive m-t-40">
+                                        <table id="example23" class="display nowrap table table-hover table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                                            <thead class="bg-dark text-white">
+                                                <tr>
+                                                    <th>Nombre</th>
+                                                    <th>Estado</th>
+                                                    <th>Licencia</th>
+                                                    <th>Dirección</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Nombre</th>
+                                                    <th>Estado</th>
+                                                    <th>Licencia</th>
+                                                    <th>Dirección</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                <?php
+                                                $statement = $conexion->prepare("SELECT * FROM conductor");
+                                                $statement->execute();
+                                                $table = $statement->fetchAll();
+                                                foreach ($table as $fila) {
+                                                    $id = $fila['id_conductor'];
+                                                    $nombre = $fila['nombre'];
+                                                    $direccion = $fila['direccion'];
+                                                    $estado = $fila['estado'];
+                                                    $licencia = $fila['licencia'];
 
-				
-						</div>
-				</div>
-				         <div class="col bg-light col-7"  id="resultado">
-                         </div>
-                        
-				</div>
-				</div>
+                                                    echo   "<tr>
+                                                              <td>$nombre</td>
+                                                              <td>$estado</td>
+                                                              <td>$licencia</td>
+                                                              <td>$direccion</td>
+                                                              <td class='text-center'>
+                                                              <button id='$id'  onClick='editar(this.id)'data-toggle='modal' data-target='#editar' class='btn btn-success btn-sm'><i class='fas fa-pencil-alt'></i></button>
+                                                              <input type='hidden' value='$nombre' id='nombre$id'/>
+                                                              <input type='hidden' value='$direccion' id='direccion$id'/>
+                                                              <input type='hidden' value='$estado' id='estado$id'/>
+                                                              <input type='hidden' value='$licencia' id='licencia$id'/>
+                                                              <form style='display:inline-block;' method='POST' action='complementos/deletes.php'>
+                                                              <input type='hidden' value='$id' name='id'/>
+                                                              <input type='hidden' value='conductor' name='accion'/>
+                                                              <button  onclick='eliminar(event)' class='btn btn-danger btn-sm'><i class='fas fa-trash-alt'></i></button>
+                                                              </form>
+                                                              </td> 
+                                                            </tr>";
+                                                } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
 
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End PAge Content -->
+                    <!-- ============================================================== -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-               
+                </div>
                 <!-- ============================================================== -->
-                <!-- End PAge Content -->
+                <!-- End Container fluid  -->
                 <!-- ============================================================== -->
-                
+                <!-- ============================================================== -->
+                <!-- footer -->
+                <!-- ============================================================== -->
+                <footer class="footer">
+                    <?php echo $footer ?>
+                </footer>
+
+                <div id="editar" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="border:10px solid">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title"> Editar Información</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <h1 class="h1-responsive text-info"><strong>EDITAR REGISTRO</strong></h1>
+                                <form action="complementos/updates.php" method="post">
+                                    <div class="form-group">
+                                        <h2 class="h2-responsive product-name m-t-10"><strong>Nombre</strong></h2>
+                                        <input type="text" id="modal_nombre" name="nombre" class="form-control">
+                                        <h2 class="h2-responsive product-name m-t-10"><strong>Dirección</strong></h2>
+                                        <input type="text" id="modal_direccion" name="direccion" class="form-control">
+                                        <h2 class="h2-responsive product-name m-t-10"><strong>Estado</strong></h2>
+                                        <input type="text" class="form-control" id="modal_estado" name="estado">
+                                        <h2 class="h2-responsive product-name m-t-10"><strong>Licencia</strong></h2>
+                                        <input type="text" class="form-control" id="modal_licencia" name="licencia">
+                                        <input type="hidden" id="id_elemento" name="id">
+                                        <input type="hidden" value="choferes" name="accion">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
+                                        <button type="submit" class="btn btn-outline-danger waves-effect waves-light"><i class="fas fa-save"> Guardar Cambios</i></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End footer -->
+                    <!-- ============================================================== -->
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Page wrapper  -->
+                <!-- ============================================================== -->
             </div>
             <!-- ============================================================== -->
-            <!-- End Container fluid  -->
+            <!-- End Wrapper -->
             <!-- ============================================================== -->
             <!-- ============================================================== -->
-            <!-- footer -->
+            <!-- All Jquery -->
             <!-- ============================================================== -->
-            <footer class="footer">
-               <?php echo $footer ?>
-            </footer>
+            <script src="../assets/plugins/jquery/jquery.min.js"></script>
+            <!-- Bootstrap tether Core JavaScript -->
+            <script src="../assets/plugins/popper/popper.min.js"></script>
+            <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+            <!-- slimscrollbar scrollbar JavaScript -->
+            <script src="js/jquery.slimscroll.js"></script>
+            <!--Wave Effects -->
+            <script src="js/waves.js"></script>
+            <!--Menu sidebar -->
+            <script src="js/sidebarmenu.js"></script>
+            <!--stickey kit -->
+            <script src="../assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+            <script src="../assets/plugins/sparkline/jquery.sparkline.min.js"></script>
+            <!--Custom JavaScript -->
+            <script src="js/custom.min.js"></script>
             <!-- ============================================================== -->
-            <!-- End footer -->
+            <!-- This page plugins -->
             <!-- ============================================================== -->
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
-        <!-- ============================================================== -->
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
-    <script src="../assets/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="../assets/plugins/popper/popper.min.js"></script>
-    <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="js/jquery.slimscroll.js"></script>
-    <!--Wave Effects -->
-    <script src="js/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="js/sidebarmenu.js"></script>
-    <!--stickey kit -->
-    <script src="../assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
-    <script src="../assets/plugins/sparkline/jquery.sparkline.min.js"></script>
-    <!--Custom JavaScript -->
-    <script src="js/custom.min.js"></script>
-    <!-- ============================================================== -->
-    <!-- This page plugins -->
-    <!-- ============================================================== -->
-    <script src="../assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-    <!-- Sweet-Alert  -->
-    <script src="../assets/plugins/sweetalert/sweetalert.min.js"></script>
-    
-<script>
+            <script src="../assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+            <!-- Sweet-Alert  -->
+            <script src="../assets/plugins/sweetalert/sweetalert.min.js"></script>
 
-$.ajax({
-      type: 'POST',
-      url: 'complementos/conductor.php'
-    })
-    .done(function(x){
-      $('#resultado').html(x)
+            <!-- This is data table -->
+            <script src="../assets/plugins/datatables/datatables.min.js"></script>
+            <!-- start - This is for export functionality only -->
+            <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+            <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+            <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+            <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+            <?php
+            if ($verificar > 0) {
+                echo "<script>swal('Imposible agregar al chofer!', 'La licencia que intenta agregar ya se encuentra registrada.')</script>";
+            }
+            if ($verificar2 > 0) {
+                echo "<script>swal('Registro Exitoso!', 'El chofer ha sido registrado con éxito.','success')</script>";
+            } ?>
+            <!-- end - This is for export functionality only -->
+            <script>
+                $('#example23').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            </script>
+            <script>
+                function editar(id) {
+                    var nombre = $('#nombre' + id).val()
+                    var direccion = $('#direccion' + id).val()
+                    var estado = $('#estado' + id).val()
+                    var licencia = $('#licencia' + id).val()
 
-    })
-    .fail(function(){
-      //alert('Hubo un error al cargar los municipios')
-    })
+                    $("#modal_nombre").attr("value", nombre)
+                    $("#modal_direccion").attr("value", direccion)
+                    $("#modal_estado").attr("value", estado)
+                    $("#modal_licencia").attr("value", licencia)
+                    $("#id_elemento").attr("value", id)
+                }
+            </script>
+            <?php
+            function  vehiculo($conexion, $id)
+            {
+                $resultado = "";
+                $statement = $conexion->prepare("SELECT * FROM vehiculos WHERE id_vehiculo='$id'");
+                $statement->execute();
+                $resultados = $statement->fetchAll();
+                foreach ($resultados as $filas) {
+                    $resultado = $filas['vehiculo'];
+                }
 
-$('#agregar').on('click', function(){
-       
-    
-    var nombre=$('#nombre').val()
-    var direccion=$('#direccion').val()
-    var estado=$('#estado').val()
-    var localidad=$('#localidad').val()
-    var licencia=$('#licencia').val()
-   
-    
-
-    if(nombre=="")
-    {
-      swal("DATOS VACIOS!", "Inserta el nombre del chofer para continuar.")
-    }
-    else if (direccion=="") 
-    {
-      swal("DATOS VACIOS!", "Inserta la dirección del chofer para continuar.")
-    }
-    else if (estado=="") {
-      swal("DATOS VACIOS!", "Inserta el estado del chofer para continuar.")
-    }
-     else if (localidad=="") {
-      swal("DATOS VACIOS!", "Inserta la localidad del chofer para continuar.")
-    }
-     else if (licencia=="") {
-      swal("DATOS VACIOS!", "Inserta la licencia del chofer para continuar.")
-    }
-     else{
-    $.ajax({
-      type: 'POST',
-      url: 'complementos/conductor.php',
-      data: {'nombre':nombre,'direccion':direccion,'estado':estado,'localidad':localidad,'licencia':licencia}
-    })
-    .done(function(x){
-      $('#resultado').html(x)
-     swal("REGISTRO EXITOSO!", "conductor agregado exitosamente","success")
-    })
-    .fail(function(){
-      //alert('Hubo un error al cargar los municipios')
-    })}
-
-    
-  })
-
-
-</script>
-
+                return $resultado;
+            }
+            ?>
 
 </body>
+<script language="JavaScript"> 
+function eliminar(e){ 
+   if (confirm('¿Esta seguro de que desea ELIMINAR el registro seleccionado?')){ 
+    document.borrar_usuario.submit();
+}
+else{
+    e.preventDefault();
+}
+} 
+</script>
 
 </html>

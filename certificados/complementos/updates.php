@@ -19,6 +19,20 @@ if ($_POST) {
 
             header('Location: ../vehiculos.php');
             break;
+            case 'choferes':
+                $nombre=$_POST['nombre'];
+                $direccion=$_POST['direccion'];
+                $estado=$_POST['estado'];
+                $licencia=$_POST['licencia'];
+                $id=$_POST['id'];
+            
+                $statement=$conexion->prepare("UPDATE conductor SET nombre='$nombre', direccion='$direccion',estado='$estado', licencia='$licencia' WHERE id_conductor='$id'");
+                $statement->execute();
+    
+                header('Location: ../conductores.php');
+
+                //echo $nombre.$direccion.$estado.$licencia.$id;
+                break;
     }
 	
 		

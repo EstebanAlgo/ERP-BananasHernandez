@@ -124,22 +124,6 @@ require('../php/conexion.php');
                                          $image_perfil="../assets/images/users/administrativo.png";
                                          $menu="../menus/administrativo.php";
                                          break;
-                                    case 'Productor':
-                                          $image_perfil="../assets/images/users/productor.jpg";
-                                          $menu="../menus/productor.php";
-                                         break;
-                                    case 'Contabilidad':
-                                          $image_perfil="../assets/images/users/contabilidad.jpg";
-                                          $menu="../menus/contabilidad.php";
-                                         break;
-                                    case 'Pista':
-                                          $image_perfil="../assets/images/users/empleados.jpg";
-                                          $menu="../menus/pista.php";
-                                         break;
-                                    case 'Bascula':
-                                          $image_perfil="../assets/images/users/empleados.jpg";
-                                          $menu="../menus/bascula.php";
-                                         break;
                                      
                                  } 
                                  ?>
@@ -181,7 +165,7 @@ require('../php/conexion.php');
      </div>
 
   <script type="text/javascript">
-   $("#barra_navegacion").load('<?php echo $menu; ?>');
+   $("#barra_navegacion").load("<?php echo $menu; ?>");
   </script>
         <!-- ============================================================== -->
         <!-- End Barra lateral derecha - style you can find in sidebar.scss  -->
@@ -222,7 +206,7 @@ require('../php/conexion.php');
                                 <h4 class="m-b-0 text-white">Añadir Nuevo Chofer</h4>
                             </div>
                             <div class="card-body">
-                                <form action="conductor.php" class="form-horizontal" method="post">
+                                <form action="conductores.php" class="form-horizontal" method="post">
                                     <div class="form-body">
                                         <h3 class="box-title">Información Requerida</h3>
                                         <hr class="m-t-0 m-b-40">
