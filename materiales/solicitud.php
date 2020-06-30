@@ -556,13 +556,12 @@ if ($_POST) {
                                                     echo "<tr>
 			                                                  <td>$proveedor</td>
                                                               <td>
-                                                                       
                                                                        <input type='hidden' id='nombreProveedor$id_proveedor' value='$proveedor'>
-                                                                       <span onClick='editarCategoria(this.id)' class='btn btn-outline-info' id='$id_proveedor' data-toggle='modal' data-target='#modal-actualizar-categoria' > <i class='fas fa-pencil-alt'></i> Editar </span>
+                                                                       <span  class='btn btn-outline-info' id='proveedor$id_proveedor' onClick='editarProveedor(this.id)' data-toggle='modal' data-target='#modal-actualizar-proveedor' > <i class='fas fa-pencil-alt'></i> Editar</span>
                                                                        
                                                                        <form action='complementos/delete.php' method='post' style='display:inline-block;'>
                                                                        <input type='hidden' name='id' value='$id_proveedor'>
-                                                                       <input type='hidden' name='accion' value='proveedores'>
+                                                                       <input type='hidden' name='accion' value='proveedores'> 
                                                                        <button onclick='eliminar(event)' class='btn btn-outline-danger' id='Agregar'> <i class='fas fa-edit'></i> Eliminar </button>
                                                                        </form>
                                                                 </td>
@@ -595,12 +594,12 @@ if ($_POST) {
                             </div>
                             <form action="complementos/updates.php" method="post">
                                 <div class="modal-body">
-                                    <h1 class="h1-responsive text-info"><strong>Editar Categoría</strong></h1>
+                                    <h1 class="h1-responsive text-info"><strong>Editar Proveedor</strong></h1>
                                     <div class="form-group">
                                         <label for="recipient-name" class="control-label">Nombre de la categoria:</label>
-                                        <input type="text" class="form-control" id="input_nombre_categoria" name="nombre">
-                                        <input type="hidden" id="id_elemento_categoria" name="id">
-                                        <input type="hidden" value="categorias" name="accion">
+                                        <input type="text" class="form-control" id="input_nombre_proveedor" name="nombre">
+                                        <input type="hidden" id="id_elemento_proveedor" name="id">
+                                        <input type="hidden" value="proveedores" name="accion">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default waves-effect" data-dismiss="modal"><i class="fas fa-times"></i> Cancelar</button>
@@ -700,6 +699,14 @@ if ($_POST) {
 
 
             $("#id_elemento").attr("value", id)
+
+        }
+        function editarProveedor(id) {   
+            id=id.substr(9,1);
+            var nombre = $('#nombreProveedor' + id).val()
+
+            $("#input_nombre_proveedor").attr("value", nombre)
+            $("#id_elemento_proveedor").attr("value", id)
 
         }
     </script>

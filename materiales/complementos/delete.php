@@ -8,7 +8,7 @@ switch ($accion) {
     $id=$_POST['id'];
     $statement=$conexion->prepare("DELETE FROM proveedor WHERE id_proveedor=$id");
 	$statement->execute();
-    header('Location: ../vista_proveedor.php');
+    header('Location: ../solicitud.php');
 		break;
 
 	case 'categorias':

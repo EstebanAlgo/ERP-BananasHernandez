@@ -8,7 +8,7 @@ switch ($accion) {
     $id=$_POST['id'];
     $actualizar_proveedor=$conexion->prepare("UPDATE proveedor SET nombre='$nombre' WHERE id_proveedor='$id'");
     $actualizar_proveedor->execute();
-    header('Location: ../vista_proveedor.php');
+    header('Location: ../solicitud.php');
 	break;
 	
 	case 'categorias':
