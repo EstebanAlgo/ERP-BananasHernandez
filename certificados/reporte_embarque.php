@@ -93,6 +93,13 @@ $cont_origen= substr($origen, 1,$coincidencia_origen-1);//extracción del contad
 $tamaño_origen=strlen($origen);
 $origen=substr($origen,$coincidencia_origen+1,$tamaño_origen); 
 
+for ($i=0; $i < 5; $i++) { 
+	$variedades[$i]="";
+	 $envases[$i]="";
+	 $cantidades[$i]="";
+	 $pesos[$i]="";
+	 $volumenes[$i]="";
+}
 
 for ($i=0; $i <$cont_variedad ; $i++) { //define elk vector que contiene los orígenes
 	 $cadena_buscada   = ']';
@@ -120,7 +127,7 @@ for ($i=0; $i <$cont_variedad ; $i++) { //define elk vector que contiene los or�
       
 	 $pesos[$i]=$pivotepeso;
 	 $volumenes[$i]=$pivotevolumen;
-       $cad_pesos=$cad_pesos+$volumenes[$i];//almacena los pesos para la carta respnsiva
+     $cad_pesos=$cad_pesos+$volumenes[$i];//almacena los pesos para la carta respnsiva
 	 $variedad=substr($variedad,$coincidencia_variedad+1,$tamaño_variedad);
 	 $envase=substr($envase,$coincidencia_envase+1,$tamaño_envase);
 	 $cantidad=substr($cantidad,$coincidencia_cantidad+1,$tamaño_cantidad);
@@ -172,65 +179,105 @@ $pdf->AddPage();
 
 
 
-$pdf->Image('../assets/images/encabezado.PNG' , 7,5, 197 , 50,'PNG', 'www.bananashernandez.com');
-//$pdf->Image('../assets/images/CONDUCTOR.PNG' , 50,150, 45 , 45,'PNG', 'www.bananashernandez.com');
+$pdf->Image('../assets/images/encabezado.PNG' , 16,10, 181 , 35,'PNG', 'www.bananashernandez.com');
+$pdf->Image('../assets/images/logo_transparente.PNG' , 150,4, 35 , 35,'PNG', 'www.bananashernandez.com');
 //$pdf->Image('../assets/images/CAMION.JPG' , 142,173, 45 , 25,'JPG', 'www.bananashernandez.com');
 
 
 $pdf->SetFillColor(224,235,255);
 $pdf->SetTextColor(0);
 
-//Sección para los datos del producto
+//-----------------------Sección para los datos del producto------------------------------------
 
 $pdf->SetXY(16,62);
 $pdf->Cell(180, 20, utf8_decode(''), 1 , 1,'C');
 $pdf->Line(16, 72, 196, 72);
 $pdf->Line(106, 62, 106, 82);
 
+$pdf->SetXY(16,53);
+$pdf->SetFont('Arial','',13);
+$pdf->SetTextColor(3,70,77);
+$pdf->Cell(120, 6, utf8_decode('PROCEDENCIA Y ENVÍO'), 0 , 1);
+$pdf->SetTextColor(0);
 
-$pdf->SetXY(88,59);
-$pdf->SetFont('Arial','b',7);
+//$pdf->SetXY(88,59);
+//$pdf->SetFont('Arial','b',7);
 //$pdf->Cell(35, 5, utf8_decode('DATOS DEL PRODUCTO'), 1 , 1,'C',1);
-
+//seccion de origen
 $pdf->SetXY(16,61);
-$pdf->SetFont('Arial','b',7);
+$pdf->SetFont('Arial','b',6);
 $pdf->Cell(20, 3, utf8_decode('ORIGEN'), 1 , 1,'C',1);
-
+$pdf->SetXY(16,65);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(90, 5, utf8_decode($origenes[0]), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de origen
+//seccion de  empacadora
 $pdf->SetXY(106,61);
 $pdf->Cell(20, 3, utf8_decode('EMPACADORA'), 1 , 1,'C',1);
-
+$pdf->SetXY(106,65);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(90, 5, utf8_decode($empacadoras[0]), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de empacadora
+//Inicio de la sección de clientes
 $pdf->SetXY(16,71);
 $pdf->Cell(20, 3, utf8_decode('CLIENTE'), 1 , 1,'C',1);
-
+$pdf->SetXY(16,75);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(90, 5, utf8_decode($destino), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de clientes
+//Inicio de la sección de Dirección de Destino
 $pdf->SetXY(106,71);
 $pdf->Cell(20, 3, utf8_decode('DESTINO'), 1 , 1,'C',1);
-
+$pdf->SetXY(106,75);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(90, 5, utf8_decode($direccion_destino), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de Direcciín de Destino
 $pdf->SetXY(88,59);
-$pdf->SetFont('Arial','b',7);
+$pdf->SetFont('Arial','b',6);
 //$pdf->Cell(35, 5, utf8_decode('DATOS DEL PRODUCTO'), 1 , 1,'C',1);
 
-//---------------INICIA SECCIÓN DE DATOS DE TRANSPORTE
+//---------------INICIA SECCIÓN DE DATOS DE TRANSPORTE--------------------------------------------
 
 $pdf->SetXY(16,93);
 $pdf->Cell(180, 20, utf8_decode(''), 1 , 1,'C');
 $pdf->Line(16, 103, 196, 103);
 $pdf->Line(106, 93, 106, 103);
 
-$pdf->SetXY(16,86);
+$pdf->SetXY(16,85);
 $pdf->SetFont('Arial','',13);
+$pdf->SetTextColor(3,70,77);
 $pdf->Cell(120, 6, utf8_decode('DATOS DEL TRANSPORTISTA'), 0 , 1);
-
+$pdf->SetTextColor(0);
+//Inicia sección del nombre
 $pdf->SetXY(16,92);
-$pdf->SetFont('Arial','b',7);
+$pdf->SetFont('Arial','b',6);
 $pdf->Cell(20, 3, utf8_decode('NOMBRE'), 1 , 1,'C',1);
-
+$pdf->SetXY(16,96);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(90, 5, utf8_decode($nombre_chofer), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion del Nombre
+//Inicia sección de Número de Licencia
 $pdf->SetXY(106,92);
 $pdf->Cell(25, 3, utf8_decode('No. DE LICENCIA'), 1 , 1,'C',1);
-
+$pdf->SetXY(106,96);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(90, 5, utf8_decode($no_licencia), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de Número de licencia
+//Inicia sección de Dirección del Chofer
 $pdf->SetXY(16,102);
 $pdf->Cell(20, 3, utf8_decode('DIRECCIÓN'), 1 , 1,'C',1);
-
-//---------------INICIA SECCIÓN DE DATOS DE DATOS DEL VEHÍCULO
+$pdf->SetXY(16,106);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(180, 5, utf8_decode($direccion_chofer), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de Dirección del Chofer
+//---------------INICIA SECCIÓN DE DATOS DE DATOS DEL VEHÍCULO------------------------------------------
 
 $pdf->SetXY(16,123);
 $pdf->Cell(180, 20, utf8_decode(''), 1 , 1,'C');
@@ -239,41 +286,83 @@ $pdf->Line(106, 123, 106, 143);
 $pdf->Line(61, 123, 61, 143);
 $pdf->Line(151, 123, 151, 143);
 
-
-$pdf->SetXY(16,116);
+$pdf->SetXY(16,115);
 $pdf->SetFont('Arial','',13);
+$pdf->SetTextColor(3,70,77);
 $pdf->Cell(120, 6, utf8_decode('DATOS DEL VEHÍCULO'), 0 , 1);
-
+$pdf->SetTextColor(0);
+//Inicia sección de Color de Vehículo
 $pdf->SetXY(16,122);
-$pdf->SetFont('Arial','b',7);
+$pdf->SetFont('Arial','b',6);
 $pdf->Cell(20, 3, utf8_decode('COLOR'), 1 , 1,'C',1);
-
+$pdf->SetXY(16,126);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(45, 5, utf8_decode($color), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de Color de Vehículo
+//Inicia seccióin de Modelo
 $pdf->SetXY(61,122);
 $pdf->Cell(25, 3, utf8_decode('MODELO'), 1 , 1,'C',1);
-
+$pdf->SetXY(61,126);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(45, 5, utf8_decode($modelo), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de Modelo
+//Inicia sección de placas/caja
 $pdf->SetXY(106,122);
 $pdf->Cell(20, 3, utf8_decode('PLACAS/CAJA'), 1 , 1,'C',1);
-
+$pdf->SetXY(106,126);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(45, 5, utf8_decode($placas_caja), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de Placas/caja
+//Inicia sección de Placas/tractor
 $pdf->SetXY(151,122);
 $pdf->Cell(25, 3, utf8_decode('PLACAS/TRACTOR'), 1 , 1,'C',1);
-
+$pdf->SetXY(151,126);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(45, 5, utf8_decode($placas), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de Dirección del Chofer
+//Inicia sección de CLASE/TIPO
 $pdf->SetXY(16,132);
 $pdf->Cell(25, 3, utf8_decode('CLASE/TIPO'), 1 , 1,'C',1);
-
+$pdf->SetXY(16,136);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(45, 5, utf8_decode($clase), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de CLASE/TIPO
+//Inicia sección de Línea
 $pdf->SetXY(61,132);
 $pdf->Cell(25, 3, utf8_decode('LÍNEA'), 1 , 1,'C',1);
-
+$pdf->SetXY(61,136);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(45, 5, utf8_decode($linea), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de Linea
+//Inicia sección de Fecha
 $pdf->SetXY(106,132);
-$pdf->Cell(25, 3, utf8_decode('HORA DE SALIDA'), 1 , 1,'C',1);
-
-$pdf->SetXY(151,132);
 $pdf->Cell(25, 3, utf8_decode('FECHA'), 1 , 1,'C',1);
+$pdf->SetXY(106,136);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(45, 5, utf8_decode($dia.'/'.$mes.'/'.$año), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de Fecha
+//Inicia sección de Hora de salida
+$pdf->SetXY(151,132);
+$pdf->Cell(25, 3, utf8_decode('HORA DE SALIDA'), 1 , 1,'C',1);
+$pdf->SetXY(151,136);
+$pdf->SetFont('Arial','',8);
+$pdf->Cell(45, 5, utf8_decode($hora), 0 , 1,'');
+$pdf->SetFont('Arial','b',6);
+//END seccion de Dirección del Chofer
 
-
-//--------------INICIA SECCIÓN DE LOS DATOS DEL PRODUCTOS
-$pdf->SetXY(16,146);
-$pdf->SetFont('Arial','b',13);
+//--------------INICIA SECCIÓN DE LOS DATOS DEL PRODUCTOS-------------------------------------------
+$pdf->SetXY(16,148);
+$pdf->SetFont('Arial','',13);
+$pdf->SetTextColor(3,70,77);
 $pdf->Cell(120, 6, utf8_decode('DATOS DEL PRODUCTO'), 0 , 1,);
+$pdf->SetTextColor(0);
 
 $pdf->SetXY(16,155);
 $pdf->SetFont('Arial','b',10);
@@ -295,65 +384,66 @@ $pdf->Cell(19, 5, 'Cantidad', 1 , 0,'C');
 $pdf->Cell(17, 5, 'TOTAL', 1 , 1,'C');
 
 //inicio de los campos de llenado para la sección de productos
+$pdf->SetFont('Arial','',7);
 //linea1
 $pdf->SetXY(16,165);
-$pdf->Cell(36, 6, '', 1 , 0,'C');
+$pdf->Cell(36, 6, utf8_decode($envases[0]), 1 , 0,'C');
 $pdf->Cell(26, 6, '', 1 , 0,'C');
 $pdf->Cell(19, 6, '', 1 , 0,'C');
 $pdf->Cell(13, 6, '', 1 , 0,'C');
 $pdf->Cell(19, 6, '', 1 , 0,'C');
 $pdf->Cell(13, 6, '', 1 , 0,'C');
-$pdf->Cell(19, 6, '', 1 , 0,'C');
-$pdf->Cell(19, 6, '', 1 , 0,'C');
-$pdf->Cell(17, 6, '', 1 , 1,'C');
+$pdf->Cell(19, 6, $pesos[0], 1 , 0,'C');
+$pdf->Cell(19, 6, $cantidades[0], 1 , 0,'C');
+$pdf->Cell(17, 6, $volumenes[0], 1 , 1,'C');
 //linea 2
 $pdf->SetXY(16,171);
-$pdf->Cell(36, 6, '', 1 , 0,'C');
+$pdf->Cell(36, 6, utf8_decode($envases[1]), 1 , 0,'C');
 $pdf->Cell(26, 6, '', 1 , 0,'C');
 $pdf->Cell(19, 6, '', 1 , 0,'C');
 $pdf->Cell(13, 6, '', 1 , 0,'C');
 $pdf->Cell(19, 6, '', 1 , 0,'C');
 $pdf->Cell(13, 6, '', 1 , 0,'C');
-$pdf->Cell(19, 6, '', 1 , 0,'C');
-$pdf->Cell(19, 6, '', 1 , 0,'C');
-$pdf->Cell(17, 6, '', 1 , 1,'C');
+$pdf->Cell(19, 6, $pesos[1], 1 , 0,'C');
+$pdf->Cell(19, 6, $cantidades[1], 1 , 0,'C');
+$pdf->Cell(17, 6, $volumenes[1], 1 , 1,'C');
 //linea 3
 $pdf->SetXY(16,177);
-$pdf->Cell(36, 6, '', 1 , 0,'C');
+$pdf->Cell(36, 6, utf8_decode($envases[2]), 1 , 0,'C');
 $pdf->Cell(26, 6, '', 1 , 0,'C');
 $pdf->Cell(19, 6, '', 1 , 0,'C');
 $pdf->Cell(13, 6, '', 1 , 0,'C');
 $pdf->Cell(19, 6, '', 1 , 0,'C');
 $pdf->Cell(13, 6, '', 1 , 0,'C');
-$pdf->Cell(19, 6, '', 1 , 0,'C');
-$pdf->Cell(19, 6, '', 1 , 0,'C');
-$pdf->Cell(17, 6, '', 1 , 1,'C');
+$pdf->Cell(19, 6, $pesos[2], 1 , 0,'C');
+$pdf->Cell(19, 6, $cantidades[2], 1 , 0,'C');
+$pdf->Cell(17, 6, $volumenes[2], 1 , 1,'C');
 //linea 4
 $pdf->SetXY(16,183);
-$pdf->Cell(36, 6, '', 1 , 0,'C');
+$pdf->Cell(36, 6, utf8_decode($envases[3]), 1 , 0,'C');
 $pdf->Cell(26, 6, '', 1 , 0,'C');
 $pdf->Cell(19, 6, '', 1 , 0,'C');
 $pdf->Cell(13, 6, '', 1 , 0,'C');
 $pdf->Cell(19, 6, '', 1 , 0,'C');
 $pdf->Cell(13, 6, '', 1 , 0,'C');
-$pdf->Cell(19, 6, '', 1 , 0,'C');
-$pdf->Cell(19, 6, '', 1 , 0,'C');
-$pdf->Cell(17, 6, '', 1 , 1,'C');
+$pdf->Cell(19, 6, $pesos[3], 1 , 0,'C');
+$pdf->Cell(19, 6, $cantidades[3], 1 , 0,'C');
+$pdf->Cell(17, 6, $volumenes[3], 1 , 1,'C');
 //linea 5
 $pdf->SetXY(16,189);
-$pdf->Cell(36, 6, '', 1 , 0,'C');
+$pdf->Cell(36, 6, utf8_decode($envases[4]), 1 , 0,'C');
 $pdf->Cell(26, 6, '', 1 , 0,'C');
 $pdf->Cell(19, 6, '', 1 , 0,'C');
 $pdf->Cell(13, 6, '', 1 , 0,'C');
 $pdf->Cell(19, 6, '', 1 , 0,'C');
 $pdf->Cell(13, 6, '', 1 , 0,'C');
-$pdf->Cell(19, 6, '', 1 , 0,'C');
-$pdf->Cell(19, 6, '', 1 , 0,'C');
-$pdf->Cell(17, 6, '', 1 , 1,'C');
+$pdf->Cell(19, 6, $pesos[4], 1 , 0,'C');
+$pdf->Cell(19, 6, $cantidades[4], 1 , 0,'C');
+$pdf->Cell(17, 6, $volumenes[4], 1 , 1,'C');
 //linea de total
 $pdf->SetXY(16,195);
 $pdf->Cell(164, 6, 'PESO TOTAL:', 0 , 0,'R');
-$pdf->Cell(17, 6, '', 1 , 1,'C');
+$pdf->Cell(17, 6,array_sum($volumenes).' kg', 1 , 1,'C');
 
 $pdf->SetXY(16, 203);
 $pdf->SetFont('Arial','b',9);
