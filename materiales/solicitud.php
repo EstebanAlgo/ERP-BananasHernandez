@@ -557,7 +557,7 @@ if ($_POST) {
 			                                                  <td>$proveedor</td>
                                                               <td>
                                                                        <input type='hidden' id='nombreProveedor$id_proveedor' value='$proveedor'>
-                                                                       <span  class='btn btn-outline-info' id='proveedor$id_proveedor' onClick='editarProveedor(this.id)' data-toggle='modal' data-target='#modal-actualizar-proveedor' > <i class='fas fa-pencil-alt'></i> Editar</span>
+                                                                       <span  class='btn btn-outline-inverse' id='proveedor$id_proveedor' onClick='editarProveedor(this.id)' data-toggle='modal' data-target='#modal-actualizar-proveedor' > <i class='fas fa-pencil-alt'></i> Editar</span>
                                                                        
                                                                        <form action='complementos/delete.php' method='post' style='display:inline-block;'>
                                                                        <input type='hidden' name='id' value='$id_proveedor'>
