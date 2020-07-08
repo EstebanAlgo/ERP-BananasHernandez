@@ -177,10 +177,8 @@ $cad_QR_origen="";
 $cad_QR_variedad="_VARIEDAD:"; 
 $pdf->AddPage();
 
-
-
 $pdf->Image('../assets/images/encabezado.PNG' , 16,10, 181 , 35,'PNG', 'www.bananashernandez.com');
-$pdf->Image('../assets/images/logo_transparente.PNG' , 150,4, 35 , 35,'PNG', 'www.bananashernandez.com');
+$pdf->Image('../assets/images/logo_transparente.png' , 150,4, 35 , 35,'PNG', 'www.bananashernandez.com');
 //$pdf->Image('../assets/images/CAMION.JPG' , 142,173, 45 , 25,'JPG', 'www.bananashernandez.com');
 
 
@@ -361,8 +359,10 @@ $pdf->SetFont('Arial','b',6);
 $pdf->SetXY(16,148);
 $pdf->SetFont('Arial','',13);
 $pdf->SetTextColor(3,70,77);
-$pdf->Cell(120, 6, utf8_decode('DATOS DEL PRODUCTO'), 0 , 1,);
+
+$pdf->Cell(120, 6, utf8_decode('DATOS DEL PRODUCTO'), 0 , 1);
 $pdf->SetTextColor(0);
+
 
 $pdf->SetXY(16,155);
 $pdf->SetFont('Arial','b',10);
@@ -447,13 +447,13 @@ $pdf->Cell(17, 6,array_sum($volumenes).' kg', 1 , 1,'C');
 
 $pdf->SetXY(16, 203);
 $pdf->SetFont('Arial','b',9);
-$pdf->Cell(90.5, 8, utf8_decode('RECIBO  EL TOTAL  DE  CAJAS DETALLADAS  EN  ESTE  CONTROL DE  EMBARQUE, HACIENDOME  RESPONSABLE'), 0 , 1,);
+$pdf->Cell(90.5, 8, utf8_decode('RECIBO  EL TOTAL  DE  CAJAS DETALLADAS  EN  ESTE  CONTROL DE  EMBARQUE, HACIENDOME  RESPONSABLE'), 0 , 1);
 
 $pdf->SetXY(16, 206);
-$pdf->Cell(90.5, 8, utf8_decode('DE  CUALQUIER PERDIDA  O  FALTANTE AL MOMENTO DE LA ENTREGA,ACEPTANDO SE ME HAGA EL DESCUENTO'), 0 , 1,);
+$pdf->Cell(90.5, 8, utf8_decode('DE  CUALQUIER PERDIDA  O  FALTANTE AL MOMENTO DE LA ENTREGA,ACEPTANDO SE ME HAGA EL DESCUENTO'), 0 , 1);
 
 $pdf->SetXY(16, 209);
-$pdf->Cell(90.5, 8, utf8_decode('CORRESPONDIENTE DE FLETE Y DE RUTA AL PRECIO QUE CORRA EN EL MERCADO EN EL DESTINO DE LA FRUTA'), 0 , 1,);
+$pdf->Cell(90.5, 8, utf8_decode('CORRESPONDIENTE DE FLETE Y DE RUTA AL PRECIO QUE CORRA EN EL MERCADO EN EL DESTINO DE LA FRUTA'), 0 , 1);
 
 
 
@@ -467,7 +467,7 @@ $pdf->Cell(197, 8, utf8_decode('NOMBRE Y FIRMA DEL OPERADOR'), 0 , 1,'C');
 
 $pdf->SetXY(18, 265);
 $pdf->Line(16, 263,70, 263);
-$pdf->Cell(197, 8, utf8_decode('NOMBRE Y FIRMA DEL ESTIBADOR'), 0 , 1,);
+$pdf->Cell(197, 8, utf8_decode('NOMBRE Y FIRMA DEL ESTIBADOR'), 0 , 1);
 
 $pdf->SetXY(9, 265);
 $pdf->Line(74, 263,142, 263);

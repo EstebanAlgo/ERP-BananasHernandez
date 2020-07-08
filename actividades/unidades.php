@@ -374,6 +374,7 @@ foreach ($cobros as $fila) {
                                                             <optgroup label="LONGITUD">
                                                             <option value="Metro">Metro</option>
                                                             <option value="Hectárea">Hectárea</option>
+                                                            <option value="Cuerda">Cuerda</option>
                                                             </optgroup>
                                                             <optgroup label="PESO">
                                                             <option value="Pieza">Pieza</option>
@@ -446,6 +447,7 @@ foreach ($cobros as $fila) {
                                                             <optgroup label="LONGITUD">
                                                             <option value="Metro">Metro</option>
                                                             <option value="Hectárea">Hectárea</option>
+                                                            <option value="Cuerda">Cuerda</option>
                                                             </optgroup>
                                                             <optgroup label="PESO">
                                                             <option value="Pieza">Pieza</option>

@@ -47,6 +47,7 @@ $pdf->SetXY(10, 47);
       $nombre_actividad=$fila['nombre'];
     $id_actividad=$fila['id_actividad'];
     $suma=0;
+    $total_cantidad=0;
 
     
     $statement=$conexion->prepare("SELECT * FROM `registro` WHERE `fecha_actividad` BETWEEN '$f1' AND '$f2' AND `id_origen` = $finca AND `id_actividad` = $id_actividad  ORDER BY empleado ASC" );
@@ -76,21 +77,26 @@ $pdf->SetXY(10, 47);
 
     
      $pdf->Cell(27,3,utf8_decode($nombre_finca),1,0,'C');
-     $pdf->Cell(35,3,utf8_decode($empleado),1,0,'C');
+     $pdf->Cell(40,3,utf8_decode($empleado),1,0,'C');
      $pdf->Cell(20,3,utf8_decode($unidad),1,0,'C');
-     $pdf->Cell(22,3,utf8_decode($cantidad),1,0,'C');
+     $pdf->Cell(17,3,utf8_decode($cantidad),1,0,'C');
      $pdf->Cell(22,3,utf8_decode($precio),1,0,'C');
      $pdf->Cell(15,3,utf8_decode("$".$costo),1,0,'C');
      $pdf->Cell(25,3,utf8_decode(substr($fecha_actividad, 8,2)."/".substr($fecha_actividad, 5,2)."/".substr($fecha_actividad, 0,4)),1,0,'C');
      $pdf->Cell(25,3,utf8_decode(substr($fecha_registro, 8,2)."/".substr($fecha_registro, 5,2)."/".substr($fecha_registro, 0,4)),1,1,'C');
      $suma=$suma+$costo;
+     $total_cantidad=$total_cantidad+$cantidad;
 
      }
     if (count($registros)>0) {
-     $pdf->Cell(151,5,utf8_decode(""),0,0,'C');
-    $pdf->SetFont('Arial','B',9);   
+      $pdf->SetFont('Arial','B',9);
+     $pdf->Cell(67,5,utf8_decode(""),0,0,'C');
+     $pdf->Cell(20,5,utf8_decode("Total:"),1,0,'C');
+     $pdf->Cell(17,5,utf8_decode($total_cantidad),1,0,'C');
+     $pdf->Cell(62,5,utf8_decode(""),0,0,'C');
+       
     $pdf->SetFillColor( 211, 154, 77 );
-    $pdf->Cell(40,5,utf8_decode("TOTAL:$".$suma),1,1,'R',1);
+    $pdf->Cell(25,5,utf8_decode("$".$suma),1,1,'R',1);
     $pdf->SetFillColor(0,0,0);
     }
 
