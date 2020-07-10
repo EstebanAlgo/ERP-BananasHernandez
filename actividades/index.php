@@ -435,7 +435,7 @@ if ($_GET) {
                                 </select>
 
                                 <label for="recipient-name" class="control-label">CANTIDAD:</label>
-                                <input type="number" class="form-control" id="input_cantidad" name="cantidad">
+                                <input type="number" step="0.01" class="form-control" id="input_cantidad" name="cantidad">
 
                                 <label for="recipient-name" class="control-label">FECHA:</label>
                                 <input type="date" class="form-control" id="input_fecha" name="fecha">
@@ -546,7 +546,7 @@ if ($_GET) {
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label class="control-label">Cantidad</label>
-                                            <input type="number" step="0.1" id="cantidad" class="form-control form-control-danger" placeholder="Cantidad" name="cantidad">
+                                            <input type="number" step="0.01" id="cantidad" class="form-control form-control-danger" placeholder="Cantidad" name="cantidad">
 
                                         </div>
                                     </div>
