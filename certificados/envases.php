@@ -13,7 +13,7 @@ if ($tipo_usuario=="null" OR $tipo_usuario=="Productor")
     $envase=$_POST['envase'];
     $tipo_envase=$_POST['tipo_envase'];
     $registrar_envase=$conexion->prepare("INSERT INTO envases(id_envase,envase,grafica) VALUES (null,'$envase','$tipo_envase')");
-    //$registrar_envase->execute();
+    $registrar_envase->execute();
  $registro++;
 
  }

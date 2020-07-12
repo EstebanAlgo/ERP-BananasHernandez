@@ -122,22 +122,6 @@ if ($tipo_usuario=="null" OR $tipo_usuario=="Productor")
                                          $image_perfil="../assets/images/users/administrativo.png";
                                          $menu="../menus/administrativo.php";
                                          break;
-                                    case 'Productor':
-                                          $image_perfil="../assets/images/users/productor.jpg";
-                                          $menu="../menus/productor.php";
-                                         break;
-                                    case 'Contabilidad':
-                                          $image_perfil="../assets/images/users/contabilidad.jpg";
-                                          $menu="../menus/contabilidad.php";
-                                         break;
-                                    case 'Pista':
-                                          $image_perfil="../assets/images/users/empleados.jpg";
-                                          $menu="../menus/pista.php";
-                                         break;
-                                    case 'Bascula':
-                                          $image_perfil="../assets/images/users/empleados.jpg";
-                                          $menu="../menus/bascula.php";
-                                         break;
                                      
                                  } 
                                  ?>
@@ -290,9 +274,13 @@ if ($tipo_usuario=="null" OR $tipo_usuario=="Productor")
         <input type='hidden' name='id_certificado' value='$id_certificado'>
            <button data-toggle='tooltip' class=' btn btn-outline-secondary btn-block' title='Reporte de salida'><i class='fas fa-print'></i></button>
     </form>
+    <form style='display:inline-block;' class='dropdown-item' action='constancia_origen.php' method='post'>
+        <input type='hidden' name='id' value='$id_certificado'>
+           <button data-toggle='tooltip' class=' btn btn-outline-inverse btn-block' title='Sobreescribir Constancia de Origen'><i class='fas fa-file'></i></button>
+    </form>
     <form style='display:inline-block;' class='dropdown-item' action='../views/perfil_capturista.php' method='post'>
         <input type='hidden' name='responsable' value='$responsable'>
-           <button data-toggle='tooltip' class=' btn btn-outline-warning btn-block' title='Capturista'><i class='fas fa-user-edit'></i></button>
+           <button data-toggle='tooltip' class=' btn btn-outline-warning btn-block' title='Capturista'><i class='fas fa-id-card-alt'></i></button>
     </form>
     <form style='display:inline-block;' class='dropdown-item' action='borrar_certificado.php' method='post'>
         <input type='hidden' name='id_certificado' value='$id_certificado'>

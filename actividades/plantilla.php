@@ -8,44 +8,20 @@ class PDF extends FPDF
 
         function Header()
         {
-                $this->Image('../assets/images/logo.png', 15, 19, 22, 21, 'PNG', 'www.bananashernandez.com');
-                $this->SetFont('Arial', 'B', 17);
-                $this->SetFillColor(0, 102, 217);
-                $this->SetTextColor(248, 251, 255);
-                $this->Cell(191, 8, utf8_decode('BANANAS HERNÁNDEZ'), 1, 0, 'C', 1);
-                $this->SetXY(87, 17);
-                $this->SetFont('Arial', '', 9);
-                $this->SetTextColor(0, 0, 0);
-                $this->Cell(10, 8, utf8_decode('R.F.C.'), 0, 1); //RFC
-                $this->SetXY(97, 17);
-                $this->SetFont('Arial', 'B', 9);
-                $this->Cell(10, 8, utf8_decode('HEGR670224AP3'), 0, 1);
-
-                $this->SetXY(7, 20);
-                $this->SetFont('Arial', '', 9);
-                $this->Cell(197, 8, utf8_decode('Cantón San José El Amate. Huehuetán, Chiapas. '), 0, 1, 'C'); //DIRECCION
-
-                $this->SetXY(73, 23);
-                $this->SetFont('Arial', 'B', 9);
-                $this->Cell(50, 8, utf8_decode('Tel. (962) 626-40-13'), 0, 1); //TELEFONO
-
-                $this->SetXY(105, 23);
-                $this->SetFont('Arial', '', 9);
-                $this->Cell(50, 8, utf8_decode('SAGARPA:'), 0, 1);
-                $this->SetXY(122, 23);
-                $this->SetFont('Arial', 'B', 9);
-                $this->Cell(50, 8, utf8_decode('AAL- 4134'), 0, 1); //TELEFONO
-                $this->SetXY(10, 41);
+                $this->Image('../assets/images/encabezado2.png', 0, 0, 211, 35, 'PNG', 'www.bananashernandez.com');
+                
+                $this->SetXY(10, 46);
                 $this->SetFillColor(232, 232, 232);
                 $this->SetFont('Arial', 'B', 9);
-                $this->Cell(27, 6, utf8_decode('FINCA'), 1, 0, 'C', 1);
-                $this->Cell(35, 6, utf8_decode('EMPLEADO'), 1, 0, 'C', 1);
-                $this->Cell(20, 6, utf8_decode('U/COBRO'), 1, 0, 'C', 1);
-                $this->Cell(22, 6, utf8_decode('CANTIDAD'), 1, 0, 'C', 1);
-                $this->Cell(22, 6, utf8_decode('PRECIO'), 1, 0, 'C', 1);
-                $this->Cell(15, 6, utf8_decode('COSTO'), 1, 0, 'C', 1);
-                $this->Cell(25, 6, utf8_decode('ELABORACIÓN'), 1, 0, 'C', 1);
-                $this->Cell(25, 6, utf8_decode('FECHA'), 1, 0, 'C', 1);
+                $this->Cell(30, 6, utf8_decode('Finca'), 1, 0, 'C', 1);
+                $this->Cell(45, 6, utf8_decode('Empleado'), 1, 0, 'C', 1);
+                $this->Cell(22, 6, utf8_decode('Elaboración'), 1, 0, 'C', 1);
+                $this->Cell(22, 6, utf8_decode('Registro'), 1, 0, 'C', 1);
+                $this->Cell(17, 6, utf8_decode('U/Cobro'), 1, 0, 'C', 1);
+                $this->Cell(17, 6, utf8_decode('Precio'), 1, 0, 'C', 1);
+                $this->Cell(19, 6, utf8_decode('Cantidad'), 1, 0, 'C', 1);
+                $this->Cell(19, 6, utf8_decode('Costo'), 1, 0, 'C', 1);
+                
 
 
                 $this->Ln(10);

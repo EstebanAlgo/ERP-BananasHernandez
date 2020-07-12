@@ -2,7 +2,7 @@
 require('../php/conexion.php');
 include('plantilla.php');
 
- 
+  
 $finca=$_POST['finca'];
 $fecha=$_POST['fecha'];
 $solicitante=$_POST['solicitante'];
@@ -14,36 +14,34 @@ $pdf = new PDF();
 $pdf->AliasNbPages();
 $pdf->AddPage();
 
-
-
 $pdf->SetXY(122, 38);
-$pdf->SetTextColor(  252, 95, 45);
-$pdf->SetFont('Arial','B',12);
+$pdf->SetFont('Arial','B',13);
 $dia1= substr($fecha, 8,2);
 $mes1= substr($fecha, 5,2);
 $año1= substr($fecha, 0,4);
+$pdf->SetXY(7, 36);
+$pdf->Cell(190, 6, utf8_decode("SOLICITUD DE MATERIAL"), 0 , 0,'C');
 
-$pdf->SetFont('Arial','B',11);
-$pdf->SetXY(33, 62);
+$pdf->SetFont('Arial','',10);
+$pdf->SetXY(10, 40);
 $pdf->Cell(63, 6, utf8_decode(empleado($conexion,$solicitante)), 0 , 0,'');
-$pdf->SetXY(32, 67);
+$pdf->SetXY(10, 43);
 $pdf->Cell(63, 6, utf8_decode(tipo_usuario($conexion,$solicitante)), 0 , 0,'');
-$pdf->SetXY(28, 72);
-$pdf->Cell(63, 6, utf8_decode(finca($conexion,$finca)), 0 , 0,'');
+$pdf->SetXY(10, 47);
+$pdf->Cell(63, 6, utf8_decode('FINCA: '.finca($conexion,$finca)), 0 , 0,'');
 
-$pdf->SetTextColor(252, 95, 45);
-$pdf->SetFont('Arial','B',13);
-$pdf->SetXY(115, 68);
-$pdf->Cell(63, 6, utf8_decode("N° Solicitud:"), 0 , 0,'');
-$pdf->SetXY(115, 74);
-$pdf->Cell(63, 6, utf8_decode("FECHA: ".$dia1.'/'.$mes1.'/'.$año1), 0 , 0,'');
+$pdf->SetTextColor(102, 113, 113);
+$pdf->SetFont('Arial','B',11);
+
+$pdf->SetXY(150, 44);
+$pdf->Cell(50, 6, utf8_decode($dia1.'/'.$mes1.'/'.$año1), 0 , 0,'R');
 
 $pdf->SetFillColor( 254, 254, 254 );
 $pdf->SetTextColor(  0, 0, 0);
 
 
 
-$pdf->SetXY(10, 91);
+$pdf->SetXY(10, 59);
 
     $statement=$conexion->prepare("SELECT * FROM usuarios WHERE id_usuario=$solicitante");
     $statement->execute();
@@ -61,17 +59,19 @@ $pdf->SetXY(10, 91);
     { 
          $id_material=$key['id_material'];
          $material=material($conexion,$id_material);
+         $solicitud=solicitud($conexion,$id_material);
          $cantidad=$key['cantidad'];
          $codigo=codigo($conexion,$id_material);
          $unidad=unidad($conexion,$id_material);
          $descripcion=descripcion($conexion,$id_material);
          $fecha_actividad=$key['fecha'];
-     $pdf->SetFont('Arial','',8);
-     $pdf->Cell(35,10,utf8_decode($material),1,0,'C',1);
-     $pdf->Cell(18,10,utf8_decode($cantidad),1,0,'C',1);
-     $pdf->Cell(20,10,utf8_decode($unidad),1,0,'C',1);
-     $pdf->Cell(25,10,utf8_decode($codigo),1,0,'C',1);
-     $pdf->Cell(93,10,utf8_decode($descripcion),1,1,'C',1);
+     $pdf->SetFont('Arial','',7);
+     $pdf->Cell(20,6,utf8_decode($solicitud),1,0,'C',1);
+     $pdf->Cell(30,6,utf8_decode($material),1,0,'C',1);
+     $pdf->Cell(16,6,utf8_decode($cantidad),1,0,'C',1);
+     $pdf->Cell(16,6,utf8_decode($unidad),1,0,'C',1);
+     $pdf->Cell(18,6,utf8_decode($codigo),1,0,'C',1);
+     $pdf->Cell(90,6,utf8_decode($descripcion),1,1,'C',1);
 
      }
    
@@ -121,6 +121,18 @@ function material($conexion,$id)
     $resultados=$statement->fetchAll();
       foreach ($resultados as $filas) {
           $resultado=$filas['nombre'];
+          
+      }
+
+return $resultado;
+}
+function solicitud($conexion,$id)
+{$resultado="";
+    $statement=$conexion->prepare("SELECT * FROM material WHERE id_material='$id'");
+    $statement->execute();
+    $resultados=$statement->fetchAll();
+      foreach ($resultados as $filas) {
+          $resultado=$filas['codigo_producto'];
           
       }
 
