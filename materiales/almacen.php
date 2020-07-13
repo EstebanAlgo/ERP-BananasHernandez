@@ -1,35 +1,18 @@
-<?php  
-      require('../php/conexion.php');
+<?php
+require('../php/conexion.php');
 
-       $image_perfil='';
-                                $menu="";
-                                switch ($tipo_usuario) {
-                                     case 'Administrador':
-                                         $image_perfil="../assets/images/users/administrador.png";
-                                         $menu="../menus/administrador.php";
-                                         break;
-                                     case 'Administrativo':
-                                         $image_perfil="../assets/images/users/administrativo.png";
-                                         $menu="../menus/administrativo.php";
-                                         break;
-                                    case 'Productor':
-                                          $image_perfil="../assets/images/users/productor.jpg";
-                                          $menu="../menus/productor.php";
-                                         break;
-                                    case 'Contabilidad':
-                                          $image_perfil="../assets/images/users/contabilidad.jpg";
-                                          $menu="../menus/contabilidad.php";
-                                         break;
-                                    case 'Pista':
-                                          $image_perfil="../assets/images/users/empleados.jpg";
-                                          $menu="../menus/pista.php";
-                                         break;
-                                    case 'Bascula':
-                                          $image_perfil="../assets/images/users/empleados.jpg";
-                                          $menu="../menus/bascula.php";
-                                         break;
-                                     
-                                 } 
+$image_perfil = '';
+$menu = "";
+switch ($tipo_usuario) {
+    case 'Administrador':
+        $image_perfil = "../assets/images/users/administrador.png";
+        $menu = "../menus/administrador.php";
+        break;
+    case 'Administrativo':
+        $image_perfil = "../assets/images/users/administrativo.png";
+        $menu = "../menus/administrativo.php";
+        break;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -98,10 +81,10 @@
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <span>
-                         <!-- dark Logo text -->
-                         <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-                         <!-- Light Logo text -->    
-                         <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
+                            <!-- dark Logo text -->
+                            <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo text -->
+                            <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -123,16 +106,15 @@
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
-                                <div class="notify"> 
+                                <div class="notify">
                                     <?php
 
-                                     if ($cont_alerta>0) {
-                                    echo "<span class='heartbit'></span> <span class='point'></span> </div>";
-                                     }
-                                     else{
-                                         echo "<span class=''></span> <span class=''></span> </div>";
-                                     } ?>
-                                
+                                    if ($cont_alerta > 0) {
+                                        echo "<span class='heartbit'></span> <span class='point'></span> </div>";
+                                    } else {
+                                        echo "<span class=''></span> <span class=''></span> </div>";
+                                    } ?>
+
                             </a>
                             <div class="dropdown-menu mailbox dropdown-menu-right scale-up" aria-labelledby="2">
                                 <ul>
@@ -144,13 +126,13 @@
                                             <!-- Message -->
                                             <?php
 
-                                            for ($i=0; $i < $cont_alerta; $i++) { 
+                                            for ($i = 0; $i < $cont_alerta; $i++) {
 
-                                                $dia= substr($fecha[$i], 8,2);
-                                                $mes= substr($fecha[$i], 5,2);
-                                                $año= substr($fecha[$i], 0,4);
-                                                $hora= substr($fecha[$i], 11,5);
-                                                
+                                                $dia = substr($fecha[$i], 8, 2);
+                                                $mes = substr($fecha[$i], 5, 2);
+                                                $año = substr($fecha[$i], 0, 4);
+                                                $hora = substr($fecha[$i], 11, 5);
+
 
                                                 echo "
                                             <!-- Message -->
@@ -161,10 +143,9 @@
                                                 </a>
                                             <!-- Message -->
                                                       ";
-                                                 
-                                             } 
+                                            }
 
-                                             ?>
+                                            ?>
                                         </div>
                                     </li>
                                     <li>
@@ -188,7 +169,8 @@
                                             <div class="u-img"><img src="../assets/images/users/1.jpg" alt="user"></div>
                                             <div class="u-text">
                                                 <h4><?php echo $usuario ?></h4>
-                                                <p class="text-muted"><?php echo $nombre.' '.$p_apellido ?></p><a href="../views/perfil-usuario.php" class="btn btn-rounded btn-danger btn-sm">Perfil</a></div>
+                                                <p class="text-muted"><?php echo $nombre . ' ' . $p_apellido ?></p><a href="../views/perfil-usuario.php" class="btn btn-rounded btn-danger btn-sm">Perfil</a>
+                                            </div>
                                         </div>
                                     </li>
                                     <li role="separator" class="divider"></li>
@@ -198,7 +180,7 @@
                                 </ul>
                             </div>
                         </li>
-                       
+
                     </ul>
                 </div>
             </nav>
@@ -209,13 +191,13 @@
         <!-- ============================================================== -->
         <!-- MENú - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-     <div id="barra_navegacion">
-           
-     </div>
+        <div id="barra_navegacion">
 
-  <script type="text/javascript">
-   $("#barra_navegacion").load('<?php echo $menu; ?>');
-  </script>
+        </div>
+
+        <script type="text/javascript">
+            $("#barra_navegacion").load('<?php echo $menu; ?>');
+        </script>
         <!-- ============================================================== -->
         <!-- End MENú - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -238,63 +220,101 @@
                             <li class="breadcrumb-item active">Almacén</li>
                         </ol>
                     </div>
-                    
+
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
-                <?php 
-        
-$Articulos="";$piv_finca=""; $piv_articulo="";
-$statement=$conexion->prepare("SELECT * FROM almacen ORDER BY id_finca ASC");
-$statement->execute();
-$cobros=$statement->fetchAll();
-foreach ($cobros as $fila) {
-  $id=$fila['id_almacen'];
-  $id_material=$fila['id_material'];
-  $material=material($conexion,$id_material);
-  $id_finca=$fila['id_finca'];
-  $finca=finca($conexion,$id_finca);
-  $stock=$fila['stock'];
+                <?php
 
+                $Articulos = "";
+                
+                
+                $piv_articulo = "";
+                $cont=0;
+                //buscar artículos
+                $statement = $conexion->prepare("SELECT * FROM material ORDER BY nombre ASC");
+                $statement->execute();
+                $materiales = $statement->fetchAll();
+                foreach ($materiales as $fila0) {
+                    
+                    $id_material=$fila0['id_material'];
+                    $nombre_material=$fila0['nombre'];
+                    $finca_li = "";
+                    $finca_div="";
+                    
+                    //Buscar artículos por fincas
+                    $total_articulo=0;
+                    $statement = $conexion->prepare("SELECT * FROM almacen WHERE id_material='$id_material'");
+                    $statement->execute();
+                    $productos=$statement->fetchAll();
+                    foreach($productos as $fila){
+                        
+                        $id = $fila['id_almacen'];
+                        $id_material = $fila['id_material'];
+                        $material = material($conexion, $id_material);
+                        $id_finca = $fila['id_finca'];
+                        $finca = finca($conexion, $id_finca);
+                        $stock = $fila['stock'];
+                        $total_articulo=$total_articulo+$stock;
+                        $finca_li.="<li class='nav-item'> <a class='nav-link'  data-toggle='tab' href='#finca$cont' role='tab'><span><i data-toggle='tooltip' data-placement='top' title='$finca' class='ti-home'></i></span></a> </li>";
+                        $finca_div.="
+                        <div class='tab-pane' id='finca$cont' role='tabpanel'>
+                                    <div class='p-20'>
+                                        <h3>$finca</h3>
+                                        <h4>Stock: <b>$stock</b> </h4>
+                                        <p><span class='card-subtitle'>OPCIONES</span>
+                                        <form action='reporte_almacen.php' method='POST'>
+                                        <input type='hidden' value='$id_finca' name='id_finca'/>
+                                        <input type='hidden' value='$id_material' name='id_material'/>
+                                        <button class='btn btn-inverse'><i class='fas fa-file-pdf'></i></button>
+                                        </form>
+                                        </p>
+                                    </div>
+                                </div>";
+                        $cont++;
+                    }
+                    //END Buscar artículos por fincas
 
-  if ($id_finca!=$piv_finca) {
-      # code...
-  }
-  
-  $Articulos.="<div class='col-lg-3 col-md-6'>
-                        <div class='card'>
-                            <div class='card-body'>
-                                <div class='d-flex flex-row'>
-                                    <div class='round align-self-center round-success'><i class='ti-wallet'></i></div>
-                                    <div class='m-l-10 align-self-center'>
-                                        <h3 class='m-b-0'>$stock</h3>
-                                        <h5 class='text-muted m-b-0'>$material</h5></div>
-                                </div>
+                    $Articulos.="<div class='col-md-3'>
+                    <div class='card'>
+                        <div class='card-body'>
+                            <h4 class='card-title'>$nombre_material</h4>
+                            <h6 class='card-subtitle'>Se cuenta con un Stock total de <b>$total_articulo</b> distribuidos en las siguientes fincas.</h6>
+                            <!-- Nav tabs -->
+                            <ul class='nav nav-tabs' role='tablist'>
+                                $finca_li
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class='tab-content tabcontent-border'>
+                                $finca_div
                             </div>
                         </div>
-                    </div>";
-} 
+                    </div>
+                </div>
+                    ";
+                }
+                //END buscar por artículos
 
-?>
+                ?>
 
-                
+
 
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-               
+
                 <div class="row">
-                     
-                     <?php echo $Articulos ?>
-                    
+
+                    <?php echo $Articulos ?>
+
                 </div>
 
-               
+
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
-                
+
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
@@ -303,7 +323,7 @@ foreach ($cobros as $fila) {
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-               <?php echo $footer ?>
+                <?php echo $footer ?>
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
@@ -341,35 +361,35 @@ foreach ($cobros as $fila) {
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="../assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-    
+
 </body>
 
 </html>
 
-<?php 
+<?php
 
-function finca($conexion,$id)
-{ $resultado="";
-    $statement=$conexion->prepare("SELECT * FROM origen WHERE id_origen='$id'");
+function finca($conexion, $id)
+{
+    $resultado = "";
+    $statement = $conexion->prepare("SELECT * FROM origen WHERE id_origen='$id'");
     $statement->execute();
-    $resultados=$statement->fetchAll();
-      foreach ($resultados as $filas) {
-          $resultado=$filas['nombre_finca'];
-          
-      }
+    $resultados = $statement->fetchAll();
+    foreach ($resultados as $filas) {
+        $resultado = $filas['nombre_finca'];
+    }
 
-return $resultado;
+    return $resultado;
 }
-function material($conexion,$id)
-{$resultado="";
-    $statement=$conexion->prepare("SELECT * FROM material WHERE id_material='$id'");
+function material($conexion, $id)
+{
+    $resultado = "";
+    $statement = $conexion->prepare("SELECT * FROM material WHERE id_material='$id'");
     $statement->execute();
-    $resultados=$statement->fetchAll();
-      foreach ($resultados as $filas) {
-          $resultado=$filas['nombre'];
-          
-      }
+    $resultados = $statement->fetchAll();
+    foreach ($resultados as $filas) {
+        $resultado = $filas['nombre'];
+    }
 
-return $resultado;
+    return $resultado;
 }
- ?>
+?>

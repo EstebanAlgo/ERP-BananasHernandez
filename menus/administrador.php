@@ -55,26 +55,9 @@
                    <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="fab fa-wpforms"></i><span class="hide-menu">Productos</span></a>
                        <ul aria-expanded="false" class="collapse">
                            <li><a href="../materiales/productos.php"><i class="fas fa-briefcase"></i> Materiales</a></li>
-                           <li><a href="../materiales/solicitud.php"><i class="fas fa-notes-medical"></i> Solicitud de Material</a></li>
-                           <li><a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-plus"></i> ALTAS</a>
-                               <ul aria-expanded="false" class="collapse">
-
-                                   <li><a href="../materiales/altas_proveedor.php">Añadir proveedor</a></li>
-                                   <li><a href="../materiales/altas_categoria.php">Añadir categoria</a></li>
-                                   <li><a href="../materiales/altas_productos.php">Añadir productos</a></li>
-
-                               </ul>
-                           <li><a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-plus"></i> Registro</a>
-                               <ul aria-expanded="false" class="collapse">
-
-                                   <li><a href="../materiales/altas_ingresos.php">Registro de ingresos</a></li>
-                                   <li><a href="../materiales/altas_egresos.php">Registro de egresos</a></li>
-
-                               </ul>
-
-                           </li>
-                           <li><a href="../materiales/almacen.php"><i class="fas fa-calendar-plus"></i> Almacén</a></li>
-                           <li><a href="../materiales/altas_solicitud.php"><i class="fas fa-calendar-plus"></i> Solicitud</a></li>
+                           <li><a href="../materiales/solicitud.php"><i class="fas fa-file-medical"></i> Solicitud de Material</a></li>
+                           <li><a href="../materiales/egresos.php"><i class="fas fa-window-maximize"></i> Salida de Material</a></li>
+                           <li><a href="../materiales/almacen.php"><i class="fas fa-warehouse"></i> Almacén</a></li>
                            <li><a href="../materiales/solicitudes.php"><i class="fas fa-file-alt"></i> Imprimir Solicitud</a></li>
 
                            <li class="nav-devider"></li>

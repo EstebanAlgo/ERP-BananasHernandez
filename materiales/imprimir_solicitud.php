@@ -57,6 +57,7 @@ $pdf->SetXY(10, 59);
 
     foreach ($registros as $key) 
     { 
+        $id_solicitud=$key['id_solicitud'];
          $id_material=$key['id_material'];
          $material=material($conexion,$id_material);
          $solicitud=solicitud($conexion,$id_material);
@@ -66,7 +67,7 @@ $pdf->SetXY(10, 59);
          $descripcion=descripcion($conexion,$id_material);
          $fecha_actividad=$key['fecha'];
      $pdf->SetFont('Arial','',7);
-     $pdf->Cell(20,6,utf8_decode($solicitud),1,0,'C',1);
+     $pdf->Cell(20,6,'SM'.$id_solicitud,1,0,'C',1);
      $pdf->Cell(30,6,utf8_decode($material),1,0,'C',1);
      $pdf->Cell(16,6,utf8_decode($cantidad),1,0,'C',1);
      $pdf->Cell(16,6,utf8_decode($unidad),1,0,'C',1);

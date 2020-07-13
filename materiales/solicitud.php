@@ -20,7 +20,7 @@ if ($_POST) {
     $finca = $_POST['finca'];
     $id_solicitud = $_POST['mayor'];
 
-    $cont=0;
+    $cont = 0;
 
     $statement = $conexion->prepare("SELECT MAX(id_solicitud) FROM solicitud");
     $statement->execute();
@@ -286,17 +286,36 @@ if ($_POST) {
                 <th><span class='label label-danger'>$status</span></th>
                 <th>$dia/$mes/$año</th>
                 <td>
-                     <form id='id_categoria' style='display:inline-block;'>
+                     
                      <input type='hidden' id='solicitud$id_solicitud' value='$id_solicitud'>
                      <input type='hidden' id='material$id_solicitud' value='$material'>
                      <input type='hidden' id='cantidad$id_solicitud' value='$cantidad'>
                      <input type='hidden' id='finca$id_solicitud' value='$finca'>
-                     <input type='hidden' id='fecha$id_solicitud' value='$fecha'>
-                     <span onClick='editar(this.id)' class='btn btn-outline-info' id='$id_solicitud' data-toggle='modal' data-target='#modal-actualizar' > <i class='fas fa-plus'></i> Añadir Ingreso </span>
+                     <input type='hidden' id='fecha$id_solicitud' value='$fecha'> 
+                     
+                     <span style='display:inline-block;' onClick='editar(this.id)' class='btn btn-outline-info btn-sm' id='$id_solicitud' data-toggle='modal' data-target='#modal-actualizar' > <i class='fas fa-plus'></i> Añadir Ingreso </span> 
+                     <form style='display:inline-block;' method='POST' action='complementos/delete.php'>
+                     <input type='hidden' value='$id_solicitud' name='id'/>
+                     <input type='hidden' value='solicitud' name='accion'/>
+                     <button onclick='eliminar(event)' class='btn btn-outline-dark btn-sm'>
+                      <i class='fas fa-window-close'></i> Cancelar Pedido 
+                      </button>
                      </form>
+                     
                 </td>
           </tr>";
-                    } else {
+                    } else if($status=='CANCELADO') {
+                        $Filas .= "<tr>
+                <td>SM$id_solicitud</td>
+                <th>$material</th>
+                <th>$cantidad</th>
+                <th>$finca</th>
+                <th><span class='label label-warning'>$status</span></th>
+                <th>$dia/$mes/$año</th>
+                <td></td>
+          </tr>";
+                    }
+                    else {
                         $Filas .= "<tr>
                 <td>SM$id_solicitud</td>
                 <th>$material</th>
@@ -557,7 +576,7 @@ if ($_POST) {
 			                                                  <td>$proveedor</td>
                                                               <td>
                                                                        <input type='hidden' id='nombreProveedor$id_proveedor' value='$proveedor'>
-                                                                       <span  class='btn btn-outline-inverse' id='proveedor$id_proveedor' onClick='editarProveedor(this.id)' data-toggle='modal' data-target='#modal-actualizar-proveedor' > <i class='fas fa-pencil-alt'></i> Editar</span>
+                                                                       <span  class='btn btn-outline-inverse' id='proveedor$id_proveedor' onClick='editarProveedor(this.id)'  > <i class='fas fa-pencil-alt'></i> Editar</span>
                                                                        
                                                                        <form action='complementos/delete.php' method='post' style='display:inline-block;'>
                                                                        <input type='hidden' name='id' value='$id_proveedor'>
@@ -678,7 +697,7 @@ if ($_POST) {
         });
     </script>
     <?php
-    if ($cont>0) {
+    if ($cont > 0) {
         echo "<script>swal('REGISTRO EXITOSO!', 'Solicitud agregada exitosamente','success')</script>";
     }
     ?>
@@ -701,8 +720,9 @@ if ($_POST) {
             $("#id_elemento").attr("value", id)
 
         }
-        function editarProveedor(id) {   
-            id=id.substr(9,1);
+
+        function editarProveedor(id) {
+            id = id.substr(9, 1);
             var nombre = $('#nombreProveedor' + id).val()
 
             $("#input_nombre_proveedor").attr("value", nombre)
@@ -713,6 +733,15 @@ if ($_POST) {
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="../assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+    <script language="JavaScript">
+        function eliminar(e) {
+            if (confirm('¿Esta seguro de que desea CANCELAR el registro seleccionado?')) {
+                document.borrar_usuario.submit();
+            } else {
+                e.preventDefault();
+            }
+        }
+    </script>
 </body>
 
 </html>
