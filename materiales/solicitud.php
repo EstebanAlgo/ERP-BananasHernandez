@@ -530,12 +530,12 @@ if ($_POST) {
                             <div class="row">
                                 <div class="col-10 col-md-4 offset-1  m-t-30 bg-light" style="height: 450px; border-radius: 10px; border: 5px solid rgba(0, 0, 0, 0.1);">
                                     <div class="form-group m-t-20">
-                                        <form action="productos.php" method="POST">
+                                        <form action="complementos/add.proveedor.php" method="POST">
                                             <h3 class="title h1-responsive text-info">Registro de Proveedor</h3>
                                             <hr>
                                             <div class="form-group offset-1">
                                                 <label class="control-label">Proveedor</label>
-                                                <input type="text" required id="nombre_proveedor" class="form-control form-control-danger" placeholder="Inserta el nombre" name="categoria">
+                                                <input type="text" required id="nombre_proveedor" class="form-control form-control-danger" placeholder="Inserta el nombre" name="proveedor">
                                                 <?php
                                                 $statement = $conexion->prepare('SELECT  MAX(id_proveedor) FROM proveedor');
                                                 $statement->execute();

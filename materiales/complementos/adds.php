@@ -72,4 +72,10 @@ switch ($accion) {
     }
 
     break;
+    case 'proveedor':
+       $proveedor=$_POST['nombre'];
+        $statement = $conexion->prepare("INSERT INTO empleado (id_empleado,cargo,nombre,p_apellido,s_apellido,nacimiento,telefono,direccion,fecha,id_usuario) VALUES (NULL,'$Cargo','$Nombre','$P_Apellido','$S_Apellido','$Nacimiento','$Telefono','$Direccion',null,'$id_usuario')");
+        $statement->execute();
+        
+      break;
 }

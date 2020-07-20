@@ -371,17 +371,17 @@ if ($_GET) {
                             <h4 class="card-title">Relacion de pago a empleados semana <?php echo $semana ?></h4>
                             <h6 class="card-subtitle">Bananas Hernandez</h6>
 
-                            <div class="col-10 col-md-6 offset-1 offset-md-6">
+                            <div class="col-12 col-md-6 offset-0 offset-md-6">
                                 <form action="pagos.php" method="GET">
                                     <div class="form-group row">
-                                        <label for="semana" class="col-4 col-form-label ">Semana a Consultar</label>
-                                        <div class="col-6">
+                                        <label for="semana" class="col-12 col-md-4 col-form-label ">Semana a Consultar</label>
+                                        <div class="col-12 col-md-6">
 
 
                                             <input class="form-control" type="week" value="<?php echo $n_semana ?>" name="semana">
                                         </div>
                                         <div class="col-2">
-                                            <button type="submit" class="btn btn-info btn-sm">Consultar</button>
+                                            <button type="submit" class="btn btn-info btn-sm mt-2">Consultar</button>
                                         </div>
                                     </div>
                                 </form>
