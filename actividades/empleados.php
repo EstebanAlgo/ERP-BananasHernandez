@@ -18,7 +18,7 @@ if ($_POST) {
 
     $id = $_POST['id'];
     $cont = 0;
-    $cont2=0;
+    $cont2 = 0;
     require('complementos/adds.php');
 }
 
@@ -225,12 +225,12 @@ if ($_POST) {
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <div class="row page-titles">
-                    <div class="col-md-5 col-8 align-self-center" >
+                    <div class="col-md-5 col-8 align-self-center">
                         <h3 class="text-themecolor m-b-0 m-t-0">SISTEMA</h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">ACTIVIDADES</a></li>
                             <li class="breadcrumb-item active">Empleados</li>
-                            
+
                         </ol>
                     </div>
 
@@ -239,11 +239,13 @@ if ($_POST) {
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <?php
+
+                //----------------SECCIÓN DE TODOS LOS USUARIOS------------------------
                 $Filas = "";
                 $statement = $conexion->prepare("SELECT * FROM empleado");
                 $statement->execute();
-                $cobros = $statement->fetchAll();
-                foreach ($cobros as $fila) {
+                $empleados = $statement->fetchAll();
+                foreach ($empleados as $fila) {
                     $nombre = $fila['nombre'];
                     $p_apellido = $fila['p_apellido'];
                     $s_apellido = $fila['s_apellido'];
@@ -258,7 +260,7 @@ if ($_POST) {
 
                     if (empty($photo)) {
 
-                        $photo = 'complementos/empleados/user.JPG';
+                        $photo = 'complementos/empleados/user.jpg';
                         //echo "<script>alert('Entra en éste if')</script>";
                     } else {
                         $photo = $photo;
@@ -277,6 +279,7 @@ if ($_POST) {
                 </td>
                 <td>$identificacion
                 <input type='hidden' id='telefono$id_empleado' value='$telefono'>
+                <input type='hidden' id='identificacion$id_empleado' value='$identificacion'>
                 </td>
                 <td>$direccion
                 <input type='hidden' id='direccion$id_empleado' value='$direccion'>
@@ -284,8 +287,8 @@ if ($_POST) {
                 <td>$nacimiento
                 <input type='hidden' id='nacimiento$id_empleado' value='$nacimiento'>
                 </td>
-                <td>$nacimiento
-                <input type='hidden' id='nacimiento$id_empleado' value='$nacimiento'>
+                <td>$fecha
+                <input type='hidden' id='nacimiento$id_empleado' value='$fecha'>
                 </td>
                 <td>
                      <form id='id_empleado' style='display:inline-block;' data-toggle='tooltip' title='Editar'>
@@ -299,62 +302,192 @@ if ($_POST) {
                      </form>
                 </td>
           </tr>";
-                } ?>
+                }
+
+                //-----------------SECCIÓN DE USUARIOS ACTIVOS------------------------
+                $FilasActivos = "";
+                $R2 = date('W');
+                $R1 = $R2 - 2;
+                $statement = $conexion->prepare("SELECT * FROM registro WHERE semana BETWEEN '$R1' AND '$R2' ORDER BY empleado ASC");
+                $statement->execute();
+                $empleadosActivos = $statement->fetchAll();
+                $id_empleado = 0;
+                $arrayActives = array();
+
+                foreach ($empleadosActivos as $fila) {
+                    $activo = $fila['empleado'];
 
 
+                    if ($activo != $id_empleado) {
+                        $FilasActivos .= empleado($conexion, $activo);
+                        array_push($arrayActives, $activo);
+                    }
 
+
+                    $id_empleado = $activo;
+                }
+                //-----------------SECCIÓN DE USUARIOS INACTIVOS------------------------
+                $FilasInactivos = "";
+                $R2 = date('W');
+                $R1 = $R2 - 3;
+                $statement = $conexion->prepare("SELECT * FROM registro WHERE semana BETWEEN '01' AND '$R1' ORDER BY empleado ASC");
+                $statement->execute();
+                $empleadosActivos = $statement->fetchAll();
+                $id_empleado = 0;
+                $arrayInactives = array();
+
+                foreach ($empleadosActivos as $fila) {
+                    $inactivo = $fila['empleado'];
+                    if ($inactivo != $id_empleado) {
+                        if ($id_empleado != 0) {
+                            if (array_search($inactivo, $arrayActives) == FALSE) {
+                                $FilasInactivos .= empleado($conexion, $inactivo);
+                                array_push($arrayInactives, $inactivo);
+                            }
+                        }
+                    }
+                    $id_empleado = $inactivo;
+                }
+                ?>
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-head">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs profile-tab" role="tablist">
+                                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#all" role="tab">Todos (<?php echo count($empleados) ?>)</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#active" role="tab">Activos(<?php echo count($arrayActives) ?>)</a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#inactives" role="tab">Inactivos(<?php echo count($arrayInactives) ?>)</a> </li>
+                            </ul>
 
-                            </div>
-                            <div class="card-body">
-                                <div class="col-12" style="text-align: right;">
-                                    <button class="btn btn-sm" style="background:  #2766ae; color: white; font-size: 0.9em;" data-toggle="modal" data-target="#modal-agregar"><i class="fas fa-plus"></i> Añadir Empleado</button>
+                            <div class="tab-content">
+                                <!-- TODOS -->
+                                <div class="tab-pane active p-20" id="all" role="tabpanel">
+                                    <h3>Todos los usuarios registrados</h3>
+                                    <div class="col-12" style="text-align: right;">
+                                        <button class="btn btn-sm" style="background:  #2766ae; color: white; font-size: 0.9em;" data-toggle="modal" data-target="#modal-agregar"><i class="fas fa-plus"></i> Añadir Empleado</button>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table data-paging="true" data-paging-size="7" id="tabla" class="display  table table-hover table-striped table-bordered table-sm " cellspacing="0" width="100%">
+                                            <thead style=" background: #cae0f9;">
+                                                <tr style="font-size: 1em; color:  #424446; font-weight: bold; font-family: 'Merriweather', serif;">
+                                                    <th>FOLIO</th>
+                                                    <th>NOMBRE</th>
+                                                    <th>CARGO</th>
+                                                    <th>IDENTIFICACIÓN</th>
+                                                    <th>DIRECCIÓN</th>
+                                                    <th>NACIMIENTO</th>
+                                                    <th>FECHA</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>FOLIO</th>
+                                                    <th>NOMBRE</th>
+                                                    <th>CARGO</th>
+                                                    <th>IDENTIFICACIÓN</th>
+                                                    <th>DIRECCIÓN</th>
+                                                    <th>NACIMIENTO</th>
+                                                    <th>FECHA</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody style="color: black; font-size: 0.8em; font-family: 'Lora', serif; padding:0px;">
 
+                                                <?php echo $Filas ?>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="card-body">
+
+                                    </div>
                                 </div>
-                                <div class="table-responsive">
-                                    <table data-paging="true" data-paging-size="7" id="tabla" class="display  table table-hover table-striped table-bordered table-sm " cellspacing="0" width="100%">
-                                        <thead style=" background: #cae0f9;">
-                                            <tr style="font-size: 1em; color:  #424446; font-weight: bold; font-family: 'Merriweather', serif;">
-                                                <th>FOLIO</th>
-                                                <th>NOMBRE</th>
-                                                <th>CARGO</th>
-                                                <th>IDENTIFICACIÓN</th>
-                                                <th>DIRECCIÓN</th>
-                                                <th>NACIMIENTO</th>
-                                                <th>FECHA</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>FOLIO</th>
-                                                <th>NOMBRE</th>
-                                                <th>CARGO</th>
-                                                <th>IDENTIFICACIÓN</th>
-                                                <th>DIRECCIÓN</th>
-                                                <th>NACIMIENTO</th>
-                                                <th>FECHA</th>
-                                                <th></th>
-                                            </tr>
-                                        </tfoot>
-                                        <tbody style="color: black; font-size: 0.8em; font-family: 'Lora', serif; padding:0px;">
+                                <!--ACTIVOS-->
+                                <div class="tab-pane" id="active" role="tabpanel">
+                                    <div class="card-body">
+                                        <h3>Usuarios activos durante las últimas 2</h3>
+                                        <div class="table-responsive">
+                                            <table data-paging="true" data-paging-size="7" id="tabla2" class="display  table table-hover table-striped table-bordered table-sm " cellspacing="0" width="100%">
+                                                <thead style=" background: #051E55;">
+                                                    <tr style="font-size: 1em; color:white; font-weight: bold; font-family: 'Merriweather', serif;">
+                                                        <th>FOLIO</th>
+                                                        <th>NOMBRE</th>
+                                                        <th>CARGO</th>
+                                                        <th>IDENTIFICACIÓN</th>
+                                                        <th>DIRECCIÓN</th>
+                                                        <th>NACIMIENTO</th>
+                                                        <th>FECHA</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>FOLIO</th>
+                                                        <th>NOMBRE</th>
+                                                        <th>CARGO</th>
+                                                        <th>IDENTIFICACIÓN</th>
+                                                        <th>DIRECCIÓN</th>
+                                                        <th>NACIMIENTO</th>
+                                                        <th>FECHA</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody style="color: black; font-size: 0.8em; font-family: 'Lora', serif; padding:0px;">
 
-                                            <?php echo $Filas ?>
+                                                    <?php echo $FilasActivos ?>
 
-                                        </tbody>
-                                    </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--INACTIVOS-->
+                                <div class="tab-pane" id="inactives" role="tabpanel">
+                                    <div class="card-body">
+
+                                        <h3>Usuarios Inactivos durante más de dos semanas</h3>
+                                        <div class="table-responsive">
+                                            <table data-paging="true" data-paging-size="7" id="tabla3" class="display  table table-hover table-striped table-bordered table-sm " cellspacing="0" width="100%">
+                                                <thead style=" background: #E72E15;">
+                                                    <tr style="font-size: 1em; color:white; font-weight: bold; font-family: 'Merriweather', serif;">
+                                                        <th>FOLIO</th>
+                                                        <th>NOMBRE</th>
+                                                        <th>CARGO</th>
+                                                        <th>IDENTIFICACIÓN</th>
+                                                        <th>DIRECCIÓN</th>
+                                                        <th>NACIMIENTO</th>
+                                                        <th>FECHA</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>FOLIO</th>
+                                                        <th>NOMBRE</th>
+                                                        <th>CARGO</th>
+                                                        <th>IDENTIFICACIÓN</th>
+                                                        <th>DIRECCIÓN</th>
+                                                        <th>NACIMIENTO</th>
+                                                        <th>FECHA</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody style="color: black; font-size: 0.8em; font-family: 'Lora', serif; padding:0px;">
+
+                                                    <?php echo $FilasInactivos ?>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
@@ -401,15 +534,15 @@ if ($_POST) {
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
-                                        <h5 class="h2-responsive product-name m-t-10"><strong>Cargo</strong></h5>
-                                    <input type="text" id="input_cargo" class="form-control" name="cargo">
+                                            <h5 class="h2-responsive product-name m-t-10"><strong>Cargo</strong></h5>
+                                            <input type="text" id="input_cargo" class="form-control" name="cargo">
                                         </div>
                                         <div class="col-6">
-                                        <h5 class="h2-responsive product-name m-t-10"><strong>Identificación</strong></h5>
-                                    <input type="text" id="input_identificacion" class="form-control" name="identificacion">
+                                            <h5 class="h2-responsive product-name m-t-10"><strong>Identificación</strong></h5>
+                                            <input type="text" id="input_identificacion" class="form-control" name="identificacion">
                                         </div>
                                     </div>
-                                    
+
 
                                     <div class="row">
                                         <div class="col-12 col-md-6">
@@ -480,12 +613,12 @@ if ($_POST) {
                                         </div>
                                         <div class="row">
                                             <div class="col-6">
-                                            <h5 class="h2-responsive product-name m-t-10"><strong>Cargo</strong></h5>
-                                                        <input type="text" class="form-control" name="Cargo" placeholder="Cargo del empleado" required>
+                                                <h5 class="h2-responsive product-name m-t-10"><strong>Cargo</strong></h5>
+                                                <input type="text" class="form-control" name="Cargo" placeholder="Cargo del empleado" required>
                                             </div>
                                             <div class="col-6">
-                                            <h5 class="h2-responsive product-name m-t-10"><strong>No. Identificación</strong></h5>
-                                                        <input type="text" class="form-control" name="identificacion" placeholder="CURP, INE, Etc..." required>
+                                                <h5 class="h2-responsive product-name m-t-10"><strong>No. Identificación</strong></h5>
+                                                <input type="text" class="form-control" name="identificacion" placeholder="CURP, INE, Etc..." required>
                                             </div>
                                         </div>
                                         <h5 class="h2-responsive product-name m-t-10"><strong>Dirección</strong></h5>
@@ -556,12 +689,24 @@ if ($_POST) {
     if ($cont2 > 0) {
         echo "<script>swal('Alerta!', 'El empleado ya se encuentra registrado.')</script>";
     }
-     ?>
+    ?>
 
     <script>
         $(function() {});
 
         $('#tabla').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+        $('#tabla2').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+        $('#tabla3').DataTable({
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
@@ -577,6 +722,7 @@ if ($_POST) {
             var nacimiento = $('#nacimiento' + id).val()
             var cargo = $('#cargo' + id).val()
             var telefono = $('#telefono' + id).val()
+            var identificacion = $('#identificacion' + id).val()
 
 
             $("#input_nombre").attr("value", nombre)
@@ -585,6 +731,7 @@ if ($_POST) {
             $("#input_direccion").attr("value", direccion)
             $("#input_nacimiento").attr("value", nacimiento)
             $("#input_telefono").attr("value", telefono)
+            $("#input_identificacion").attr("value", identificacion)
             $("#input_cargo").attr("value", cargo)
 
 
@@ -625,50 +772,6 @@ if ($_POST) {
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="../assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-    <!-- jQuery file upload -->
-    <script src="../assets/plugins/dropify/dist/js/dropify.min.js"></script>
-    <script>
-    $(document).ready(function() {
-        // Basic
-        $('.dropify').dropify();
-
-        // Translated
-        $('.dropify-fr').dropify({
-            messages: {
-                default: 'Glissez-déposez un fichier ici ou cliquez',
-                replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
-                remove: 'Supprimer',
-                error: 'Désolé, le fichier trop volumineux'
-            }
-        });
-
-        // Used events
-        var drEvent = $('#input-file-events').dropify();
-
-        drEvent.on('dropify.beforeClear', function(event, element) {
-            return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
-        });
-
-        drEvent.on('dropify.afterClear', function(event, element) {
-            alert('File deleted');
-        });
-
-        drEvent.on('dropify.errors', function(event, element) {
-            console.log('Has Errors');
-        });
-
-        var drDestroy = $('#input-file-to-destroy').dropify();
-        drDestroy = drDestroy.data('dropify')
-        $('#toggleDropify').on('click', function(e) {
-            e.preventDefault();
-            if (drDestroy.isDropified()) {
-                drDestroy.destroy();
-            } else {
-                drDestroy.init();
-            }
-        })
-    });
-    </script>
 </body>
 
 </html>
@@ -686,4 +789,53 @@ function actividad($conexion, $id)
     }
 
     return $resultado;
+}
+
+function empleado($conexion, $id_empleado)
+{
+    $Filas = "";
+    $statement = $conexion->prepare("SELECT * FROM empleado WHERE id_empleado='$id_empleado'");
+    $statement->execute();
+    $activo = $statement->fetchAll();
+
+    foreach ($activo as $fila) {
+        $nombre = $fila['nombre'];
+        $p_apellido = $fila['p_apellido'];
+        $s_apellido = $fila['s_apellido'];
+        $cargo = $fila['cargo'];
+        $nacimiento = $fila['nacimiento'];
+        $telefono = $fila['telefono'];
+        $direccion = $fila['direccion'];
+        $identificacion = $fila['identificacion'];
+        $photo = $fila['photo'];
+        $fecha = $fila['fecha'];
+        $id_empleado = $fila['id_empleado'];
+
+        if (empty($photo)) {
+
+            $photo = 'complementos/empleados/user.jpg';
+            //echo "<script>alert('Entra en éste if')</script>";
+        } else {
+            $photo = $photo;
+        }
+
+
+        $Filas = "
+        <tr>
+                <td style='color: #1488fc ; font-weight:bold; padding-left:30px;'>$id_empleado</td>
+                <td><a href='perfil.php?id=$id_empleado' target='_blank'><img src='$photo' alt='user' class='img-circle ' style='width:40px; height:40px;' />  $nombre $p_apellido $s_apellido</a></td>
+                <td>$cargo</td>
+                <td>$identificacion</td>
+                <td>$direccion</td>
+                <td>$nacimiento</td>
+                <td>$fecha</td>
+                <td>
+                <form action='complementos/delete.php' method='post' style='display:inline-block;'>
+                <input type='hidden' name='id' value='$id_empleado'>
+                <input type='hidden' name='accion' value='empleados'>
+                <button data-toggle='tooltip' title='Eliminar Folio $id_empleado' onclick='eliminar(event)' class='btn btn-sm btn-outline-secondary p-t-0 p-b-0' id='Agregar'> <i class='fas fa-trash-alt'></i></button>
+                </form></td>
+          </tr>";
+        return $Filas;
+    }
 } ?>

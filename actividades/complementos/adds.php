@@ -91,7 +91,7 @@ switch ($accion) {
       $identificadores = $statement->fetchAll();
       
       if (empty($identificadores)) {
-        $statement = $conexion->prepare("INSERT INTO empleado (id_empleado,cargo,nombre,p_apellido,s_apellido,identificacion,nacimiento,telefono,direccion,photo,fecha,id_usuario) VALUES (NULL,'$Cargo','$Nombre','$P_Apellido','$S_Apellido','$identificacion','$Nacimiento','$Telefono','$Direccion','complementos/empleados/user.JPG',null,'$id_usuario')");
+        $statement = $conexion->prepare("INSERT INTO empleado (id_empleado,cargo,nombre,p_apellido,s_apellido,identificacion,nacimiento,telefono,direccion,photo,fecha,id_usuario) VALUES (NULL,'$Cargo','$Nombre','$P_Apellido','$S_Apellido','$identificacion','$Nacimiento','$Telefono','$Direccion','complementos/empleados/user.jpg',null,'$id_usuario')");
         $statement->execute();
         $cont++;
       } else {

@@ -255,7 +255,7 @@ if ($_GET) {
 
                     if (empty($photo)) {
 
-                        $photo = 'complementos/empleados/user.JPG';
+                        $photo = 'complementos/empleados/user.jpg';
                         //echo "<script>alert('Entra en éste if')</script>";
                     } else {
                         $photo = $photo;

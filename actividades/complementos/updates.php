@@ -80,8 +80,10 @@ switch ($accion) {
 		$nacimiento = $_POST['nacimiento'];
 		$telefono = $_POST['telefono'];
 		$direccion = $_POST['direccion'];
+		$identificacion = $_POST['identificacion'];
 		$id = $_POST['id'];
-		$actualizar_empleado = $conexion->prepare("UPDATE empleado SET nombre='$nombre', p_apellido='$p_apellido',s_apellido='$s_apellido',cargo='$cargo',nacimiento='$nacimiento',telefono='$telefono',direccion='$direccion' WHERE id_empleado='$id'");
+		
+		$actualizar_empleado = $conexion->prepare("UPDATE empleado SET nombre='$nombre', p_apellido='$p_apellido',s_apellido='$s_apellido',identificacion='$identificacion',cargo='$cargo',nacimiento='$nacimiento',telefono='$telefono',direccion='$direccion' WHERE id_empleado='$id'");
 		$actualizar_empleado->execute();
 		header('Location: ../empleados.php');
 		break;
