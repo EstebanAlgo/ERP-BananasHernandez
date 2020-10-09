@@ -6,7 +6,7 @@
  date_default_timezone_set('Mexico/General');
      try {
 
-	$conexion= new PDO('mysql:host=localhost;dbname=bananashernandez','root','');
+	$conexion= new PDO('mysql:host=localhost;dbname=bananash_sistema','bananash_esteban','130614gaes.');
 	
          } 
      catch (PDOException $e) {
