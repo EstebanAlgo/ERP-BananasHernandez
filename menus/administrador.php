@@ -60,9 +60,13 @@
                            <li><a href="../materiales/almacen.php"><i class="fas fa-warehouse"></i> Almacén</a></li>
                            <li><a href="../materiales/solicitudes.php"><i class="fas fa-file-alt"></i> Imprimir Solicitud</a></li>
 
-                           <li class="nav-devider"></li>
+                           <li class="nav-devider"> </li>
 
                        </ul>
+                   </li>
+                   <li> <a class="has-arrow waves-effect waves-dark" href="../controlcintas/" aria-expanded="false"><i class="fas fa-table"></i><span class="hide-menu">Control de Cintas</span></a>
+                   </li>
+               </ul>
            </nav>
            <!-- End Sidebar navigation -->
        </div>

@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "./static/css/main.b3f41c5c.chunk.css",
+    "main.js": "./static/js/main.bbb65749.chunk.js",
+    "main.js.map": "./static/js/main.bbb65749.chunk.js.map",
+    "runtime~main.js": "./static/js/runtime~main.d653cc00.js",
+    "runtime~main.js.map": "./static/js/runtime~main.d653cc00.js.map",
+    "static/js/2.cb3a54ad.chunk.js": "./static/js/2.cb3a54ad.chunk.js",
+    "static/js/2.cb3a54ad.chunk.js.map": "./static/js/2.cb3a54ad.chunk.js.map",
+    "index.html": "./index.html",
+    "precache-manifest.00e4621935c5873c33e299cc24b4754d.js": "./precache-manifest.00e4621935c5873c33e299cc24b4754d.js",
+    "service-worker.js": "./service-worker.js",
+    "static/css/main.b3f41c5c.chunk.css.map": "./static/css/main.b3f41c5c.chunk.css.map",
+    "static/media/base.scss": "./static/media/rw-widgets.eceddf47.ttf",
+    "static/media/city1.jpg": "./static/media/city1.ebc5562d.jpg",
+    "static/media/encabezado2.png": "./static/media/encabezado2.7676482f.png"
+  }
+}
