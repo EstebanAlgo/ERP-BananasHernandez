@@ -15,12 +15,15 @@ switch ($tipo_usuario) {
 }
 if ($_GET) {
     $semana = $_GET['semana'];
+    $year = substr($semana, 0, 4);
     $n_semana = $semana;
     $semana = substr($semana, 6, 2);
 } else {
     $semana = date('W');
     $n_semana = date('Y') . '-W' . date('W');
+    $year = date('Y');
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,7 +64,8 @@ if ($_GET) {
     <!-- ============================================================== -->
     <div class="preloader">
         <svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
     </div>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
@@ -91,7 +95,9 @@ if ($_GET) {
                             <!-- dark Logo text -->
                             <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
                             <!-- Light Logo text -->
-                            <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
+                            <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" />
+                        </span>
+                    </a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -251,7 +257,7 @@ if ($_GET) {
                     $id_empleado = $fila['id_empleado'];
 
                     $pago = 0;
-                    $statement = $conexion->prepare("SELECT * FROM registro WHERE empleado='$id_empleado' AND semana='$semana'");
+                    $statement = $conexion->prepare("SELECT * FROM registro WHERE empleado='$id_empleado' AND fecha_registro LIKE '%$year%' AND semana='$semana'");
                     $statement->execute();
                     $registros = $statement->fetchAll();
 
@@ -259,8 +265,10 @@ if ($_GET) {
 
                         $pago = $pago + $fila2['total'];
                     }
+
                     $pendiente = $pago - $abono;
-                    $statement = $conexion->prepare("SELECT * FROM pagos WHERE semana='$semana'  AND id_empleado=$id_empleado");
+
+                    $statement = $conexion->prepare("SELECT * FROM pagos WHERE semana='$semana' AND fecha LIKE '%$year%' AND id_empleado=$id_empleado");
                     $statement->execute();
                     $semanas = $statement->fetchAll();
 
@@ -288,7 +296,7 @@ if ($_GET) {
                 }
 
 
-                $statement = $conexion->prepare("SELECT * FROM pagos WHERE semana='$semana'");
+                $statement = $conexion->prepare("SELECT * FROM pagos WHERE semana='$semana' AND fecha LIKE '%$year%'");
                 $statement->execute();
                 $registros = $statement->fetchAll();
                 foreach ($registros as $key) {
@@ -324,6 +332,11 @@ if ($_GET) {
                     }
 
                     $fecha = $key['fecha'];
+                    $fecha=substr($fecha, 8, 2).'/'.substr($fecha, 5, 2).'/'.substr($fecha, 0, 4).' '.substr($fecha, 11, 8);;
+
+                    $dia = substr($fecha, 8, 2);
+                    $mes = substr($fecha, 5, 2);
+                    $año = substr($fecha, 0, 4);
 
                     $total = $total + $monto;
                     $totalA = $totalA + $abono;
@@ -335,7 +348,7 @@ if ($_GET) {
                       <td>$abono</td>
                       <td>$pendiente</td>
                       <td>$status</td>
-                      <td>$fecha</td>
+                      <td><span class='badge badge-light'>$fecha</span></td>
                       <td>$opciones <a class='btn btn-inverse btn-sm' target='_blank' href='reporte_actividades.php?id=$id_empleado&semana=$semana'>
                       <i class='fas fa-address-book'></i></a>
                       </td>
@@ -349,8 +362,7 @@ if ($_GET) {
 
                 function nombre($conexion, $id_empleado)
                 {
-
-
+                    $nombre = "<span>*Empleado Eliminado</span>";
                     $statement = $conexion->prepare("SELECT * FROM empleado WHERE id_empleado=$id_empleado");
                     $statement->execute();
                     $empleados = $statement->fetchAll();
@@ -359,7 +371,6 @@ if ($_GET) {
 
                         $nombre = $fila2['nombre'] . " " . $fila2['p_apellido'] . " " . $fila2['s_apellido'];
                     }
-
                     return $nombre;
                 }
 
@@ -500,8 +511,8 @@ if ($_GET) {
             var monto = $('#monto' + id).val();
             var abono = $('#abono' + id).val();
 
-          
-            monto=monto-abono;
+
+            monto = monto - abono;
 
             $('#id_nombreempleado').html(nombre); //asignar valor
             $('#id_pagoempleado').html(monto);

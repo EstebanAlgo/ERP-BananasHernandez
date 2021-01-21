@@ -264,19 +264,11 @@ if ($tipo_usuario=="null" OR $tipo_usuario=="Productor")
     </form>
     <form style='display:inline-block;' class='dropdown-item' action='formato_impresion.php' method='post'>
         <input type='hidden' name='id_certificado' value='$id_certificado'>
-           <button data-toggle='tooltip' class=' btn btn-outline-success btn-block' title='Imprimir'><i class='fas fa-print imprimir'></i></button>
+           <button data-toggle='tooltip' class=' btn btn-outline-success btn-block' title='Imprimir Formatos'><i class='fas fa-print imprimir'></i></button>
     </form>
     <form style='display:inline-block;' class='dropdown-item' action='formato_descarga.php' method='post'>
         <input type='hidden' name='id_certificado' value='$id_certificado'>
            <button data-toggle='tooltip' class=' btn btn-outline-primary btn-block' title='Descargar'><i class='fas fa-download descargar'></i></button>
-    </form>
-    <form style='display:inline-block;' class='dropdown-item' action='reporte_embarque.php' method='post'>
-        <input type='hidden' name='id_certificado' value='$id_certificado'>
-           <button data-toggle='tooltip' class=' btn btn-outline-secondary btn-block' title='Reporte de salida'><i class='fas fa-print'></i></button>
-    </form>
-    <form style='display:inline-block;' class='dropdown-item' action='constancia_origen.php' method='post'>
-        <input type='hidden' name='id' value='$id_certificado'>
-           <button data-toggle='tooltip' class=' btn btn-outline-inverse btn-block' title='Sobreescribir Constancia de Origen'><i class='fas fa-file'></i></button>
     </form>
     <form style='display:inline-block;' class='dropdown-item' action='../views/perfil_capturista.php' method='post'>
         <input type='hidden' name='responsable' value='$responsable'>

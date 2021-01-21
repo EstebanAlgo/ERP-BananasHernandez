@@ -30,7 +30,7 @@ switch ($tipo_usuario) {
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/logo.ico">
     <link rel="manifest" href="./manifest.json" />
-    <title>controlCintas</title>
+    <title>Control de Cintas</title>
     <link href="./static/css/main.b3f41c5c.chunk.css" rel="stylesheet">
     <!-- Bootstrap Core CSS -->
     <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -214,10 +214,10 @@ switch ($tipo_usuario) {
                 <!-- ============================================================== -->
                 <div class="row page-titles">
                     <div class="col-md-5 col-8 align-self-center">
-                        <h3 class="text-themecolor m-b-0 m-t-0">PANEL</h3>
+                        <h3 class="text-themecolor m-b-0 m-t-0">CINTAS</h3>
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active">Bananas Hernández</li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Sistema</a></li>
+                            <li class="breadcrumb-item active">Control de cintas</li>
                         </ol>
                     </div>
 
